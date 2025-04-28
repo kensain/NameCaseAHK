@@ -1802,135 +1802,135 @@ class NCLNameCaseCore extends NCL {
 class NCLNameCaseWord {
 
     __Init() {
-        this._word := ""
-        this._word_orig := ""
-        this._namePart := ""
-        this._genderMan := 0
-        this._genderWoman := 0
-        this._genderSolved := 0
-        this._letterMask := []
-        this._isUpperCase := false
+        this._Word := ""
+        this._WordOrig := ""
+        this._NamePart := ""
+        this._GenderMan := 0
+        this._GenderWoman := 0
+        this._GenderSolved := 0
+        this._LetterMask := []
+        this._IsUpperCase := false
         this._NameCases := []
-        this._rule := 0
+        this._Rule := 0
     }
 
     /**
-     * Слово в нижнем регистре, которое хранится в об’єкте класса
-     * @var string
+     * Слово в нижнем регистре, которое хранится в объекте класса.
+     * @property {String} Word
      */
-    word {
+    Word {
         get {
-            return this._word
+            return this._Word
         }
         set {
-            this._word := Value
-        }
-    }
-
-    /**
-     * Оригинальное слово
-     * @var string
-     */
-    word_orig {
-        get {
-            return this._word_orig
-        }
-        set {
-            this._word_orig := Value
+            this._Word := Value
         }
     }
 
     /**
-     * Тип текущей записи (Фамилия/Имя/Отчество)
-     * - <b>N</b> - ім’я
-     * - <b>S</b> - прізвище
-     * - <b>F</b> - по-батькові
-     * @var string
+     * Оригинальное слово.
+     * @property {String} WordOrig
      */
-    namePart {
+    WordOrig {
         get {
-            return this._namePart
+            return this._WordOrig
         }
         set {
-            this._namePart := Value
+            this._WordOrig := Value
         }
     }
 
     /**
-     * Вероятность того, что текущей слово относится к мужскому полу
-     * @var int
+     * Тип текущей записи (Фамилия/Имя/Отчество).
+     * - <b>N</b> - имя
+     * - <b>S</b> - фамилия
+     * - <b>F</b> - отчество
+     * @property {String} NamePart
      */
-    genderMan {
+    NamePart {
         get {
-            return this._genderMan
+            return this._NamePart
         }
         set {
-            this._genderMan := Value
+            this._NamePart := Value
         }
     }
 
     /**
-     * Вероятность того, что текущей слово относится к женскому полу
-     * @var int
+     * Вероятность того, что текущее слово относится к мужскому полу.
+     * @property {Int} GenderMan
      */
-    genderWoman {
+    GenderMan {
         get {
-            return this._genderWoman
+            return this._GenderMan
         }
         set {
-            this._genderWoman := Value
+            this._GenderMan := Value
         }
     }
 
     /**
-     * Окончательное решение, к какому полу относится слово
-     * - 0 - не определено
-     * - NCL::$MAN - мужской пол
-     * - NCL::$WOMAN - женский пол
-     * @var int
+     * Вероятность того, что текущее слово относится к женскому полу.
+     * @property {Int} GenderWoman
      */
-    genderSolved {
+    GenderWoman {
         get {
-            return this._genderSolved
+            return this._GenderWoman
         }
         set {
-            this._genderSolved := Value
+            this._GenderWoman := Value
+        }
+    }
+
+    /**
+     * Окончательное решение, к какому полу относится слово.
+     * - <var>0</var> - не определено
+     * - <var>NCL.MAN</var> - мужской пол
+     * - <var>NCL.WOMAN</var> - женский пол
+     * @property {Int} GenderSolved
+     */
+    GenderSolved {
+        get {
+            return this._GenderSolved
+        }
+        set {
+            this._GenderSolved := Value
         }
     }
 
     /**
      * Маска больших букв в слове.
      *
-     * Содержит информацию о том, какие буквы в слове были большими, а какие мальникими:
-     * - x - маленькая буква
-     * - X - больная буква
-     * @var array
+     * Содержит информацию о том, какие буквы в слове были большими, а какие маленькими:
+     * - <var>x</var> - маленькая буква
+     * - <var>X</var> - большая буква
+     * @property {Array.<String>} LetterMask
      */
-    letterMask {
+    LetterMask {
         get {
-            return this._letterMask
+            return this._LetterMask
         }
         set {
-            this._letterMask := Value
+            this._LetterMask := Value
         }
     }
 
     /**
-     * Содержит true, если все слово было в верхнем регистре и false, если не было
-     * @var bool
+     * Содержит <var>true</var>, если все слово было в верхнем регистре и false, если не было.
+     * @property {Boolean } IsUpperCase
      */
-    isUpperCase {
+    IsUpperCase {
         get {
-            return this._isUpperCase
+            return this._IsUpperCase
         }
         set {
-            this._isUpperCase := Value
+            this._IsUpperCase := Value
         }
     }
 
     /**
-     * Массив содержит все падежи слова, полученые после склонения текущего слова
-     * @var array
+     * Массив содержит все падежи слова, полученые после склонения текущего слова.
+     * @property {Array} NameCases
      */
     NameCases {
         get {
@@ -1942,214 +1942,213 @@ class NCLNameCaseWord {
     }
 
     /**
-     * Номер правила, по которому было произведено склонение текущего слова
-     * @var int
+     * Номер правила, по которому было произведено склонение текущего слова.
+     * @property {Int} Rule
      */
-    rule {
+    Rule {
         get {
-            return this._rule
+            return this._Rule
         }
         set {
-            this._rule := Value
+            this._Rule := Value
         }
     }
 
     /**
-     * Создание нового обьекта со словом <var>$word</var>
-     * @param string $word слово
+     * Создание нового обьекта со словом <var>Word</var>
+     * @property {String} Word слово
      */
-    __New(word) {
-        this.word_orig := word
-        this.generateMask(word)
-        this.word := StrLower(word)
+    __New(Word) {
+        this.WordOrig := Word
+        this.GenerateMask(Word)
+        this.Word := StrLower(Word)
     }
 
     /**
      * Генерирует маску, которая содержит информацию о том, какие буквы в слове были большими, а какие маленькими:
-     * - x - маленькая буква
-     * - X - больная буква
-     * @param string $word слово, для которого генерировать маску
+     * - <var>x</var> - маленькая буква
+     * - <var>X</var> - большая буква
+     * @param {String} Word слово, для которого будет создаваться маска
      */
-    generateMask(word) {
-        letters := NCLStr.splitLetters(word)
-        mask := []
-        this.isUpperCase := true
-        for letter in letters {
-            if (NCLStr.isLowerCase(letter)) {
-                mask.Push("x")
-                this.isUpperCase := false
+    GenerateMask(Word) {
+        Letters := NCLStr.SplitLetters(word)
+        Mask := []
+        this.IsUpperCase := true
+        for letter in Letters {
+            if (NCLStr.IsLowerCase(letter)) {
+                Mask.Push("x")
+                this.IsUpperCase := false
             } else {
-                mask.Push("X")
+                Mask.Push("X")
             }
         }
-        this.letterMask := mask
+        this.LetterMask := Mask
     }
 
     /**
      * Возвращает все падежи слова в начальную маску:
-     * - x - маленькая буква
-     * - X - больная буква
+     * - <var>x</var> - маленькая буква
+     * - <var>X</var> - большая буква
      */
-    returnMask() {
-        if this.isUpperCase {
+    ReturnMask() {
+        if this.IsUpperCase {
             for index, _case in this.NameCases {
                 this.NameCases[index] := StrUpper(_case)
             }
         } else {
-            SplitedMask := this.letterMask
-            maskLength := splitedMask.Length
+            SplittedMask := this.LetterMask
+            MaskLength := SplittedMask.Length
             for index, _case in this.NameCases {
-                caseLength := StrLen(_case)
-                _max := Min([caseLength, maskLength]*)
+                CaseLength := StrLen(_case)
+                _Max := Min([CaseLength, MaskLength]*)
                 this.NameCases[index] := ''
                 LetterIndex := 1
-                while (letterIndex <= _max) {
-                    letter := SubStr(_case, letterIndex, 1)
-                    if (splitedMask[letterIndex] == 'X') {
-                        letter := StrUpper(letter)
+                while (LetterIndex <= _Max) {
+                    Letter := SubStr(_case, LetterIndex, 1)
+                    if (SplittedMask[LetterIndex] == 'X') {
+                        Letter := StrUpper(Letter)
                     }
-                    this.NameCases[index] .= letter
-                    letterIndex++
+                    this.NameCases[index] .= Letter
+                    LetterIndex++
                 }
                 if StrLen(_case) = StrLen(this.NameCases[index])
                     continue
-                this.NameCases[index] .= SubStr(_case, _max + 1)
+                this.NameCases[index] .= SubStr(_case, _Max + 1)
             }
         }
     }
 
     /**
-     * Сохраняет результат склонения текущего слова
-     * @param array $nameCases массив со всеми падежами
+     * Сохраняет результат склонения текущего слова.
+     * @param {Array} NameCases массив со всеми падежами
      */
-    setNameCases(nameCases, is_return_mask:=true) {
-        this.NameCases := nameCases
-        if is_return_mask
+    SetNameCases(NameCases, IsReturnMask := true) {
+        this.NameCases := NameCases
+        if IsReturnMask
             this.returnMask()
     }
 
     /**
-     * Возвращает массив со всеми падежами текущего слова
-     * @return array массив со всеми падежами
+     * Возвращает массив со всеми падежами текущего слова.
+     * @returns {Array} массив со всеми падежами
      */
-    getNameCases() => this.NameCases
+    GetNameCases() => this.NameCases
 
     /**
-     * Возвращает строку с нужным падежом текущего слова
-     * @param int $number нужный падеж
-     * @return string строка с нужным падежом текущего слова
+     * Возвращает строку с нужным падежом текущего слова.
+     * @param {Int} Number нужный падеж
+     * @returns {String} строка с нужным падежом текущего слова
      */
-    getNameCase(number) {
-        if this.NameCases.Has(number) {
-            return this.NameCases[number]
+    getNameCase(Number) {
+        if this.NameCases.Has(Number) {
+            return this.NameCases[Number]
         }
         return false
     }
 
     /**
-     * Расчитывает и возвращает пол текущего слова
-     * @return int пол текущего слова
+     * Расчитывает и возвращает пол текущего слова.
+     * @returns {Int} пол текущего слова
      */
-    gender() {
-        if !this.genderSolved {
-            if this.genderMan >= this.genderWoman {
-                this.genderSolved := NCL.MAN
+    Gender() {
+        if !this.GenderSolved {
+            if this.GenderMan >= this.GenderWoman {
+                this.GenderSolved := NCL.MAN
             } else {
-                this.genderSolved := NCL.WOMAN
+                this.GenderSolved := NCL.WOMAN
             }
         }
-        return this.genderSolved
+        return this.GenderSolved
     }
 
     /**
-     * Устанавливает вероятности того, что даное слово является мужчиной или женщиной
+     * Устанавливает вероятности того, что даное слово является мужчиной или женщиной.
      * @param {Int} Man вероятность того, что слово мужчина
      * @param {Int} Woman верятность того, что слово женщина
      */
     SetGender(Man, Woman) {
-        this.genderMan := Man
-        this.genderWoman := Woman
+        this.GenderMan := Man
+        this.GenderWoman := Woman
     }
 
     /**
-     * Окончательно устанавливает пол человека
-     * - 0 - не определено
-     * - NCL::$MAN - мужчина
-     * - NCL::$WOMAN - женщина
-     * @param int $gender пол человека
+     * Окончательно устанавливает пол человека.
+     * - <var>0</var> - не определено
+     * - <var>NCL.MAN</var> - мужчина
+     * - <var>NCL.WOMAN</var> - женщина
+     * @param {Int} Gender пол человека
      */
-    setTrueGender(gender) {
-        this.genderSolved := gender
+    SetTrueGender(Gender) {
+        this.GenderSolved := Gender
     }
 
     /**
-     * Возвращает массив вероятности того, что даное слово является мужчиной или женщиной
-     * @return array массив вероятностей
+     * Возвращает массив вероятности того, что даное слово является мужчиной или женщиной.
+     * @returns {Map} массив вероятностей
      */
     getGender() => Map(NCL.MAN, this.genderMan, NCL.WOMAN, this.genderWoman)
 
     /**
-     * Устанавливает тип текущего слова
+     * Устанавливает тип текущего слова.
+     * 
      * <b>Тип слова:</b>
-     * - S - Фамилия
-     * - N - Имя
-     * - F - Отчество
-     * @param string $namePart тип слова
+     * - <var>S</var> - Фамилия
+     * - <var>N</var> - Имя
+     * - <var>F</var> - Отчество
+     * @param {String} NamePart тип слова
      */
-    setNamePart(namePart) {
-        this.namePart := namePart
+    SetNamePart(NamePart) {
+        this.NamePart := NamePart
     }
 
     /**
-     * Возвращает тип текущего слова
+     * Возвращает тип текущего слова.
+     * 
      * <b>Тип слова:</b>
-     * - S - Фамилия
-     * - N - Имя
-     * - F - Отчество
-     * @return string $namePart тип слова
+     * - <var>S</var> - Фамилия
+     * - <var>N</var> - Имя
+     * - <var>F</var> - Отчество
+     * @returns {String} тип слова
      */
-    getNamePart() => this.namePart
+    GetNamePart() => this.namePart
     
 
     /**
      * Возвращает текущее слово.
-     * @return {String} Текущее слово
+     * @returns {String} Текущее слово
      */
-    getWord() => this.word
+    GetWord() => this.Word
 
     /**
      * Возвращает текущее оригинальное слово.
-     * @return string текущее слово
+     * @returns {String} текущее слово
      */
-    getWordOrig() => this.word_orig
+    GetWordOrig() => this.WordOrig
 
     /**
      * Если уже был расчитан пол для всех слов системы, тогда каждому слову предается окончательное
      * решение. Эта функция определяет было ли принято окончательное решение.
-     * @return bool было ли принято окончательное решение по поводу пола текущего слова
+     * @returns {Boolean} было ли принято окончательное решение по поводу пола текущего слова
      */
-    isGenderSolved() => this.genderSolved ? true : false
+    IsGenderSolved() => this.GenderSolved ? true : false
 
     /**
-     * Устанавливает номер правила по которому склонялось текущее слово.
-     * @param int $ruleID номер правила
+     * Устанавливает номер правила, по которому склонялось текущее слово.
+     * @param {Int} RuleID номер правила
      */
-    setRule(ruleID) {
-        this.rule := ruleID
+    SetRule(RuleID) {
+        this.Rule := RuleID
     }
 }
 
 /**
- * @license Dual licensed under the MIT or GPL Version 2 licenses.
- * @package NameCaseLib
- */
-
-/**
  * <b>NCL NameCase Russian Language</b>
  * 
- * Русские правила склонения ФИО
- * Правила определения пола человека по ФИО для русского языка
- * Система разделения фамилий имен и отчеств для русского языка
+ * Русские правила склонения ФИО.
+ * 
+ * Правила определения пола человека по ФИО для русского языка.
+ * 
+ * Система разделения фамилий имен и отчеств для русского языка.
  * 
  * @author Андрей Чайка <bymer3@gmail.com>
  * @version 0.4.1
@@ -2158,37 +2157,29 @@ class NCLNameCaseWord {
 class NCLNameCaseRu extends NCLNameCaseCore {
 
     /**
-     * Версия языкового файла
-     * @var string 
+     * Версия языкового файла.
+     * @property {String} LanguageBuild
      */
-    languageBuild => "11072716"
+    LanguageBuild => "11072716"
+
     /**
-     * Количество падежей в языке
-     * @var int
+     * Количество падежей в языке.
+     * @property {Int} CaseCount
      */
-    CaseCount {
-        get {
-            return 6
-        }
-    }
+    CaseCount => 6
+
     /**
-     * Список гласных русского языка
-     * @var string 
+     * Список гласных русского языка.
+     * @property {String} Vowels
      */
-    vowels {
-        get {
-            return "аеёиоуыэюя"
-        }
-    }
+    Vowels => "аеёиоуыэюя"
+
     /**
-     * Список согласных русского языка
-     * @var string  
+     * Список согласных русского языка.
+     * @property {String} Consonant
      */
-    consonant {
-        get {
-            return "бвгджзйклмнпрстфхцчшщ"
-        }
-    }
+    Consonant => "бвгджзйклмнпрстфхцчшщ"
+    
     /**
      * Окончания имен/фамилий, который не склоняются
      * @var array 
@@ -2958,11 +2949,12 @@ pad2 := [
 ; MsgBox res
 ; a := NCLNameCaseRu()
 TestNames := [
-    "Портнов Максим Дмитриевич",
-    "Лаптева Елена Витальевна",
-    "Возчиков Никита Сергеевич",
-    "Белова Анна Михайловна",
-    "Беспалов Андрей Михайлович"
+    ; "Портнов Максим Дмитриевич",
+    ; "Лаптева Елена Витальевна",
+    ; "Возчиков Никита Сергеевич",
+    ; "Белова Анна Михайловна",
+    ; "Беспалов Андрей Михайлович",
+    "Мубаракшина Камилла Булатовна"
 ]
 for name in TestNames {
     loop 6 {
