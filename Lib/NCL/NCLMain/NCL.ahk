@@ -641,9 +641,9 @@ class NCLNameCaseCore extends NCL {
      */
     SetFirstName(Firstname := "") {
         if Firstname != "" {
-            ; index := this.words.Length
+            index := this.words.Length > 0 ? this.words.Length : 1
             this.Words.Push(NCLNameCaseWord(Firstname))
-            this.Words[-1].WetNamePart('N')
+            this.Words[-1].SetNamePart('N')
             this.NotReady()
         }
         return this
@@ -673,7 +673,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFatherName(Fathername := "") {
         if Fathername != "" {
-            index := this.Words.Length
+            index := this.words.Length > 0 ? this.words.Length : 1
             this.Words[index] := NCLNameCaseWord(Fathername)
             this.Words[index].SetNamePart('F')
             this.NotReady()
@@ -1047,7 +1047,7 @@ class NCLNameCaseCore extends NCL {
         if Type(Word) != "NCLNameCaseWord"
             throw TypeError(A_LineFile A_Tab A_ThisFunc A_Tab "Параметром должен был объект типа 'NCLNameCaseWord', но вместо него - " Type(Word))
         Cases := Word.GetNameCases()
-        if ((Number = "") or (Number < 0) or (Number > (this.CaseCount - 1))) {
+        if ((Number = "") or (Number < 0) or (Number > this.CaseCount)) {
             return Cases
         } else  {
             return Cases[Number]
@@ -2956,15 +2956,21 @@ TestNames := [
     "Беспалов Андрей Михайлович",
     "Мубаракшина Камилла Булатовна"
 ]
+
+#Include <AHKv2_Scripts\Json>
 for name in TestNames {
     loop 6 {
         a := NCLNameCaseRu()
-        LastName := StrSplit(name, A_Space, 1)[1]
-        OutputDebug LastName "`n"
-        OutputDebug a.qFatherName(LastName, A_Index) "`n"
+        LastName := StrSplit(name, A_Space)[2]
+        ; OutputDebug LastName "`n"
+        res := a.qFirstName(LastName, A_Index)
+        OutputDebug (res) '`n'
+
+        
+        ; OutputDebug Type(res) = "Array" ? res[6] : res "`n"
         ; OutputDebug a.q(name, A_Index) "`n"
     }
-    OutputDebug "`n"
+    OutputDebug "`n`n"
 }
 ; OutputDebug a.q(, 1) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
