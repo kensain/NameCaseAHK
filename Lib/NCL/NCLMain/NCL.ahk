@@ -673,7 +673,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFatherName(Fathername := "") {
         if Fathername != "" {
-            index := this.words.Length > 0 ? this.words.Length : 1
+            index := this.Words.Length
             this.Words[index] := NCLNameCaseWord(Fathername)
             this.Words[index].SetNamePart('F')
             this.NotReady()
