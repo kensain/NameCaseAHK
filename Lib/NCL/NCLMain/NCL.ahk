@@ -641,7 +641,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFirstName(Firstname := "") {
         if Firstname != "" {
-            Index := this.words.Length > 0 ? this.words.Length : 1
+            Index := this.Words.Length > 0 ? this.Words.Length : 1
             this.Words.Push(NCLNameCaseWord(Firstname))
             this.Words[-1].SetNamePart('N')
             this.NotReady()
@@ -657,7 +657,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetSecondName(Secondname := "") {
         if Secondname != "" {
-            Index := this.words.Length > 0 ? this.words.Length : 1
+            Index := this.Words.Length > 0 ? this.Words.Length : 1
             this.Words.Push(NCLNameCaseWord(Secondname))
             this.Words[Index].SetNamePart('S')
             this.NotReady()
@@ -673,9 +673,9 @@ class NCLNameCaseCore extends NCL {
      */
     SetFatherName(Fathername := "") {
         if Fathername != "" {
-            index := this.Words.Length
-            this.Words[index] := NCLNameCaseWord(Fathername)
-            this.Words[index].SetNamePart('F')
+            Index := this.Words.Length > 0 ? this.Words.Length : 1
+            this.Words.Push(NCLNameCaseWord(Fathername))
+            this.Words[Index].SetNamePart('F')
             this.NotReady()
         }
         return this
@@ -1189,7 +1189,7 @@ class NCLNameCaseCore extends NCL {
      */
     qFatherName(FatherName, CaseNumber := "", Gender := 0) {
         this.FullReset()
-        this.SetFatherName(NCLNameCaseWord(FatherName))
+        this.SetFatherName(FatherName)
         if (Gender) {
             this.SetGender(Gender)
         }
@@ -2941,8 +2941,8 @@ TestNames := [
 for name in TestNames {
     loop 6 {
         a := NCLNameCaseRu()
-        LastName := StrSplit(name, A_Space)[1]
-        res := a.qSecondName(LastName, A_Index)
+        LastName := StrSplit(name, A_Space)[3]
+        res := a.qFatherName(LastName, A_Index)
         OutputDebug (res) '`n'
     }
     OutputDebug "`n`n"
