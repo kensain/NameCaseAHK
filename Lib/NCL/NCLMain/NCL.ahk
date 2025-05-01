@@ -2928,26 +2928,6 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     */
 }
 
-; a := NCLNameCaseRu()
-pad1 := Map(
-    1, "И",
-    2, "Р",
-    3, "Д",
-    4, "В",
-    5, "Т",
-    6, "П",
-)
-pad2 := [
-    "И",
-    "Р",
-    "Д",
-    "В",
-    "Т",
-    ; "П",
-]
-; res := a.q("Белова Анна Михайловна", 2)
-; MsgBox res
-; a := NCLNameCaseRu()
 TestNames := [
     "Портнов Максим Дмитриевич",
     "Лаптева Елена Витальевна",
@@ -2958,23 +2938,32 @@ TestNames := [
 ]
 
 #Include <AHKv2_Scripts\Json>
-for name in TestNames {
-    loop 6 {
-        a := NCLNameCaseRu()
-        LastName := StrSplit(name, A_Space)[2]
-        ; OutputDebug LastName "`n"
-        res := a.qFirstName(LastName, A_Index)
-        OutputDebug (res) '`n'
+; for name in TestNames {
+;     loop 6 {
+;         a := NCLNameCaseRu()
+;         LastName := StrSplit(name, A_Space)[2]
+;         ; OutputDebug LastName "`n"
+;         res := a.qFirstName(LastName, A_Index)
+;         OutputDebug (res) '`n'
 
         
-        ; OutputDebug Type(res) = "Array" ? res[6] : res "`n"
-        ; OutputDebug a.q(name, A_Index) "`n"
-    }
-    OutputDebug "`n`n"
-}
-; OutputDebug a.q(, 1) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
+;         ; OutputDebug Type(res) = "Array" ? res[6] : res "`n"
+;         ; OutputDebug a.q(name, A_Index) "`n"
+;     }
+;     OutputDebug "`n`n"
+; }
+; for name in TestNames {
+;     loop 6 {
+;         a := NCLNameCaseRu()
+;         res := a.q(name, A_Index)
+;         OutputDebug (res) '`n'
+;     }
+;     OutputDebug "`n"
+; }
+a := NCLNameCaseRu()
+OutputDebug a.q("Портнов Максим Дмитриевич", 1) "`n"
+OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
+OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
+OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
+OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
+OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
