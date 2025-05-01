@@ -641,7 +641,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFirstName(Firstname := "") {
         if Firstname != "" {
-            index := this.words.Length > 0 ? this.words.Length : 1
+            Index := this.words.Length > 0 ? this.words.Length : 1
             this.Words.Push(NCLNameCaseWord(Firstname))
             this.Words[-1].SetNamePart('N')
             this.NotReady()
@@ -657,8 +657,8 @@ class NCLNameCaseCore extends NCL {
      */
     SetSecondName(Secondname := "") {
         if Secondname != "" {
-            Index := this.Words.Length
-            this.Words[Index] := NCLNameCaseWord(Secondname)
+            Index := this.words.Length > 0 ? this.words.Length : 1
+            this.Words.Push(NCLNameCaseWord(Secondname))
             this.Words[Index].SetNamePart('S')
             this.NotReady()
         }
@@ -2938,20 +2938,15 @@ TestNames := [
 ]
 
 #Include <AHKv2_Scripts\Json>
-; for name in TestNames {
-;     loop 6 {
-;         a := NCLNameCaseRu()
-;         LastName := StrSplit(name, A_Space)[2]
-;         ; OutputDebug LastName "`n"
-;         res := a.qFirstName(LastName, A_Index)
-;         OutputDebug (res) '`n'
-
-        
-;         ; OutputDebug Type(res) = "Array" ? res[6] : res "`n"
-;         ; OutputDebug a.q(name, A_Index) "`n"
-;     }
-;     OutputDebug "`n`n"
-; }
+for name in TestNames {
+    loop 6 {
+        a := NCLNameCaseRu()
+        LastName := StrSplit(name, A_Space)[1]
+        res := a.qSecondName(LastName, A_Index)
+        OutputDebug (res) '`n'
+    }
+    OutputDebug "`n`n"
+}
 ; for name in TestNames {
 ;     loop 6 {
 ;         a := NCLNameCaseRu()
@@ -2960,10 +2955,10 @@ TestNames := [
 ;     }
 ;     OutputDebug "`n"
 ; }
-a := NCLNameCaseRu()
-OutputDebug a.q("Портнов Максим Дмитриевич", 1) "`n"
-OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
-OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
-OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
-OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
-OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
+; a := NCLNameCaseRu()
+; OutputDebug a.q("Портнов Максим Дмитриевич", 1) "`n"
+; OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
+; OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
+; OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
+; OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
+; OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
