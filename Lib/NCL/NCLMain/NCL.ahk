@@ -1037,14 +1037,13 @@ class NCLNameCaseCore extends NCL {
     }
 
     /**
-     * Если указан номер падежа `Number`, возвращается строка с таким номером падежа.
-     * 
+     * Если указан номер падежа `Number`, возвращается строка с таким номером падежа.  
      * Если нет - возвращается массив со всеми падежами текущего слова.
      * @param {(NCLNameCaseWord)} Word слово, для которого нужно вернуть падеж
      * @param {(Int)} Number номер падежа, который нужно вернуть
      * @return {(Array|String)} с нужным падежом
      */
-    GetWordCase(Word, Number?) {
+    GetWordCase(Word, Number := unset) {
         if Type(Word) != "NCLNameCaseWord"
             throw TypeError(A_LineFile A_Tab A_ThisFunc A_Tab "Параметром должен был объект типа 'NCLNameCaseWord', но вместо него - " Type(Word))
         Cases := Word.GetNameCases()
@@ -1062,7 +1061,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа
      * @returns {(Array|String)} либо массив со всеми падежами, либо строка с одним падежом
      */
-    GetCasesConnected(IndexArray, Number?) {
+    GetCasesConnected(IndexArray, Number := unset) {
         ReadyArr := []
         if (Type(IndexArray) != "Array") {
             ; Convert to single-element array
@@ -1105,10 +1104,10 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа
      * @returns {(Array|String)} с нужным падежом
      */
-    GetFirstNameCase(Number := "") {
+    GetFirstNameCase(Number := unset) {
         this.AllWordCases()
 
-        return this.GetCasesConnected(this.Index['N'], Number)
+        return this.GetCasesConnected(this.Index['N'], Number?)
     }
 
     /**
@@ -1119,10 +1118,10 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    GetSecondNameCase(Number := "") {
+    GetSecondNameCase(Number := unset) {
         this.AllWordCases()
 
-        return this.GetCasesConnected(this.Index['S'], Number)
+        return this.GetCasesConnected(this.Index['S'], Number?)
     }
 
     /**
@@ -1133,10 +1132,10 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    GetFatherNameCase(Number := "") {
+    GetFatherNameCase(Number := unset) {
         this.AllWordCases()
 
-        return this.GetCasesConnected(this.Index['F'], Number)
+        return this.GetCasesConnected(this.Index['F'], Number?)
     }
 
     /**
@@ -1149,13 +1148,13 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Gender пол, который нужно использовать
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    qFirstName(FirstName, CaseNumber := "", Gender := 0) {
+    qFirstName(FirstName, CaseNumber?, Gender := 0) {
         this.FullReset()
         this.SetFirstName(FirstName)
         if (Gender) {
             this.SetGender(Gender)
         }
-        return this.GetFirstNameCase(CaseNumber)
+        return this.GetFirstNameCase(CaseNumber?)
     }
 
     /**
@@ -1168,14 +1167,14 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Gender пол, который нужно использовать
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    qSecondName(SecondName, CaseNumber := "", Gender := 0) {
+    qSecondName(SecondName, CaseNumber := unset, Gender := 0) {
         this.FullReset()
         this.SetSecondName(SecondName)
         if (Gender) {
             this.SetGender(Gender)
         }
 
-        return this.GetSecondNameCase(CaseNumber)
+        return this.GetSecondNameCase(CaseNumber?)
     }
 
     /**
@@ -1188,13 +1187,13 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Gender пол, который нужно использовать
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    qFatherName(FatherName, CaseNumber := "", Gender := 0) {
+    qFatherName(FatherName, CaseNumber := unset, Gender := 0) {
         this.FullReset()
         this.SetFatherName(FatherName)
         if (Gender) {
             this.SetGender(Gender)
         }
-        return this.GetFatherNameCase(CaseNumber)
+        return this.GetFatherNameCase(CaseNumber?)
 }
 
     /**
@@ -1562,9 +1561,8 @@ class NCLNameCaseCore extends NCL {
     }
 
     /**
-     * ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДТСВЕННОСТИ НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.
-     * 
-     * Идетифицирует слово определя имя это, или фамилия, или отчество.
+     * ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДСТВЕННОСТИ НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.  
+     * Идентифицирует слово определя имя это, или фамилия, или отчество.
      * - <b>N</b> - имя
      * - <b>S</b> - фамилия
      * - <b>F</b> - отчество
@@ -1910,7 +1908,7 @@ class NCLNameCaseWord {
      * Содержит информацию о том, какие буквы в слове были большими, а какие маленькими:
      * - `x` - маленькая буква
      * - `X` - большая буква
-     * @property {Array.<String>} LetterMask
+     * @property {(Array.<String>)} LetterMask Массив строк типа `["X", "x", "x", "x", "x", "x",]`
      */
     LetterMask {
         get {
@@ -1923,7 +1921,7 @@ class NCLNameCaseWord {
 
     /**
      * Содержит `true`, если все слово было в верхнем регистре и false, если не было.
-     * @property {Boolean } IsUpperCase
+     * @property {(Boolean)} IsUpperCase
      */
     IsUpperCase {
         get {
@@ -2027,6 +2025,7 @@ class NCLNameCaseWord {
     /**
      * Сохраняет результат склонения текущего слова.
      * @param {(Array)} NameCases массив со всеми падежами
+     * @param {(Boolean)} IsReturnMask Флаг необходимости возврата к начальной маске
      */
     SetNameCases(NameCases, IsReturnMask := true) {
         this.NameCases := NameCases
@@ -2089,14 +2088,13 @@ class NCLNameCaseWord {
     }
 
     /**
-     * Возвращает массив вероятности того, что даное слово является мужчиной или женщиной.
+     * Возвращает массив вероятности того, что даное слово относится к мужчине или женщине.
      * @returns {(Map)} массив вероятностей
      */
-    getGender() => Map(NCL.MAN, this.genderMan, NCL.WOMAN, this.genderWoman)
+    GetGender() => Map(NCL.MAN, this.genderMan, NCL.WOMAN, this.GenderWoman)
 
     /**
-     * Устанавливает тип текущего слова.
-     * 
+     * Устанавливает тип текущего слова.  
      * <b>Тип слова:</b>
      * - `S` - Фамилия
      * - `N` - Имя
@@ -2108,8 +2106,7 @@ class NCLNameCaseWord {
     }
 
     /**
-     * Возвращает тип текущего слова.
-     * 
+     * Возвращает тип текущего слова.  
      * <b>Тип слова:</b>
      * - `S` - Фамилия
      * - `N` - Имя
@@ -2133,7 +2130,8 @@ class NCLNameCaseWord {
 
     /**
      * Если уже был расчитан пол для всех слов системы, тогда каждому слову предается окончательное
-     * решение. Эта функция определяет было ли принято окончательное решение.
+     * решение.  
+     * Эта функция определяет было ли принято окончательное решение.
      * @returns {(Boolean)} было ли принято окончательное решение по поводу пола текущего слова
      */
     IsGenderSolved() => this.GenderSolved ? true : false
@@ -2970,9 +2968,9 @@ TestNames := [
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
 
-; for name in TestNames {
-;     ; loop 6 {
-;         a := NCLNameCaseRu()
-;         OutputDebug JSON.stringify(a.qFullName(StrSplit(name, A_Space)*)) "`n"
-;     ; }
-; }
+for name in TestNames {
+    ; loop 6 {
+        a := NCLNameCaseRu()
+        OutputDebug JSON.stringify(a.qFatherName(StrSplit(name, A_Space)[3])) "`n"
+    ; }
+}
