@@ -641,7 +641,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFirstName(Firstname := "") {
         if Firstname != "" {
-            Index := this.Words.Length > 0 ? this.Words.Length : 1
+            Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Firstname))
             this.Words[-1].SetNamePart('N')
             this.NotReady()
@@ -657,7 +657,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetSecondName(Secondname := "") {
         if Secondname != "" {
-            Index := this.Words.Length > 0 ? this.Words.Length : 1
+            Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Secondname))
             this.Words[Index].SetNamePart('S')
             this.NotReady()
@@ -673,7 +673,7 @@ class NCLNameCaseCore extends NCL {
      */
     SetFatherName(Fathername := "") {
         if Fathername != "" {
-            Index := this.Words.Length > 0 ? this.Words.Length : 1
+            Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Fathername))
             this.Words[Index].SetNamePart('F')
             this.NotReady()
@@ -995,6 +995,7 @@ class NCLNameCaseCore extends NCL {
             } else {
                 ; не склоняется. Заполняем что есть
                 ResultTemp := []
+                ResultTemp.Length := this.CaseCount
                 loop this.CaseCount
                     ResultTemp[A_Index] := cur_word
                 LastRule :=-1
@@ -1043,11 +1044,11 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа, который нужно вернуть
      * @return {(Array|String)} с нужным падежом
      */
-    GetWordCase(Word, Number := "") {
+    GetWordCase(Word, Number?) {
         if Type(Word) != "NCLNameCaseWord"
             throw TypeError(A_LineFile A_Tab A_ThisFunc A_Tab "Параметром должен был объект типа 'NCLNameCaseWord', но вместо него - " Type(Word))
         Cases := Word.GetNameCases()
-        if ((Number = "") or (Number < 0) or (Number > this.CaseCount)) {
+        if (!IsSet(Number)) or (Number < 0) or (Number > this.CaseCount) {
             return Cases
         } else  {
             return Cases[Number]
@@ -1068,7 +1069,7 @@ class NCLNameCaseCore extends NCL {
             IndexArray := [IndexArray]
         }
         for index in IndexArray {
-            ReadyArr.Push(this.getWordCase(this.words[index], Number))
+            ReadyArr.Push(this.getWordCase(this.words[index], Number?))
         }
         
         All := ReadyArr.Length
@@ -1118,7 +1119,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа
      * @returns {(Array|String)} массив или строка с нужным падежом
      */
-    GetSecondNameCase(Number?) {
+    GetSecondNameCase(Number := "") {
         this.AllWordCases()
 
         return this.GetCasesConnected(this.Index['S'], Number)
@@ -1212,18 +1213,24 @@ class NCLNameCaseCore extends NCL {
 
         Length := StrLen(Format)
         Result := []
-        Cases := Map(
-            Cases['S'], this.GetCasesConnected(this.Index['S']),
-            Cases['N'], this.GetCasesConnected(this.Index['N']),
-            Cases['F'], this.GetCasesConnected(this.Index['F']),
-        )
+        Cases := Map()
+        Cases.Set('S', this.GetCasesConnected(this.Index['S']))
+        Cases.Set('N', this.GetCasesConnected(this.Index['N']))
+        Cases.Set('F', this.GetCasesConnected(this.Index['F']))
 
-        CurCase := 0
-        while (CurCase < this.CaseCount) {
+        CurCase := 1
+        while (CurCase <= this.CaseCount) {
             Line := ""
-            i := 0
-            while (i < Length) {
+            i := 1
+            while (i <= Length) {
                 symbol := SubStr(Format, i, 1)
+                switch symbol {
+                    case "S": Line .= Cases["S"][CurCase]
+                    case "N": Line .= Cases["N"][CurCase]
+                    case "F": Line .= Cases["F"][CurCase]
+                    default: Line .= symbol
+                }
+                /**
                 if (symbol == 'S') {
                     Line .= Cases['S'][CurCase]
                 } else if (symbol == 'N') {
@@ -1233,6 +1240,7 @@ class NCLNameCaseCore extends NCL {
                 } else {
                     Line .= symbol
                 }
+                */
                 i++
             }
             Result.Push(Line)
@@ -1290,8 +1298,7 @@ class NCLNameCaseCore extends NCL {
     }
 
     /**
-     * Склоняет текущие слова в падеж `CaseNum` и форматирует слово по шаблону `Format`.
-     * 
+     * Склоняет текущие слова в падеж `CaseNum` и форматирует слово по шаблону `Format`.  
      * <b>Формат:</b>
      * - S - Фамилия
      * - N - Имя
@@ -1333,8 +1340,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Склоняет фамилию `SecondName`, имя `FirstName`, отчество `FatherName`
-     * в падеж `CaseNum` по правилам пола `Gender` и форматирует результат по шаблону `Format`.
-     * 
+     * в падеж `CaseNum` по правилам пола `Gender` и форматирует результат по шаблону `Format`.  
      * <b>Формат:</b>
      * - S - Фамилия
      * - N - Имя
@@ -2938,15 +2944,15 @@ TestNames := [
 ]
 
 #Include <AHKv2_Scripts\Json>
-for name in TestNames {
-    loop 6 {
-        a := NCLNameCaseRu()
-        LastName := StrSplit(name, A_Space)[3]
-        res := a.qFatherName(LastName, A_Index)
-        OutputDebug (res) '`n'
-    }
-    OutputDebug "`n`n"
-}
+; for name in TestNames {
+;     loop 6 {
+;         a := NCLNameCaseRu()
+;         namepart := StrSplit(name, A_Space)
+;         res := a.qFullName(namepart[1], namepart[2], namepart[3],, A_Index)
+;         OutputDebug (res) '`n'
+;     }
+;     OutputDebug "`n`n"
+; }
 ; for name in TestNames {
 ;     loop 6 {
 ;         a := NCLNameCaseRu()
@@ -2956,9 +2962,17 @@ for name in TestNames {
 ;     OutputDebug "`n"
 ; }
 ; a := NCLNameCaseRu()
+; loop 5
+; OutputDebug JSON.stringify(a.qFullName("Портнов", "Максим", "Дмитриевич"))
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 1) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 2) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
 ; OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
+
+; for name in TestNames {
+;     ; loop 6 {
+;         a := NCLNameCaseRu()
+;         OutputDebug JSON.stringify(a.qFullName(StrSplit(name, A_Space)*)) "`n"
+;     ; }
+; }
