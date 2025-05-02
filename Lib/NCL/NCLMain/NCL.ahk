@@ -129,14 +129,14 @@ class NCLStr {
     }
 
     /**
-     * Поиск подстроки в строке
-     * @param {(String)} haystack строка, в которой искать
-     * @param {(String)} needle подстрока, которую нужно найти
-     * @param {(Int)} offset начало поиска
-     * @returns {(Int)} позиция подстроки в строке
+     * Поиск подстроки в строке.
+     * @param {(String)} Haystack Строка, в которой искать
+     * @param {(String)} Needle Подстрока, которую нужно найти.
+     * @param {(Int)} Offset Начало поиска.
+     * @returns {(Int)} Позиция подстроки в строке.
      */
-    static strpos(haystack, needle, offset := 1) {
-        return InStr(haystack, needle, CaseSense := 0, offset)
+    static strpos(Haystack, Needle, Offset := 1) {
+        return InStr(Haystack, Needle, CaseSense := 0, Offset)
     }
 
     /**
@@ -203,8 +203,8 @@ class NCLStr {
     
     /**
      * Превращает строку в массив букв.
-     * @param {(String)} Phrase строка
-     * @returns {(Array.<String>)} Массив букв
+     * @param {(String)} Phrase Строка.
+     * @returns {(Array.<String>)} Массив букв.
      */
     static SplitLetters(Phrase) {
         LettersArr := []
@@ -228,9 +228,9 @@ class NCLStr {
     
     /**
      * Соединяет буквы друг с другом через разделитель
-     * @param {(String)} Separator Разделитель, например, `"-"`
-     * @param {(Array.<String>)} LettersArr Массив букв, например, `["а", "б"]`
-     * @returns {(String)} Результат объединения - `"а-б"`
+     * @param {(String)} Separator Разделитель, например, `"-"`.
+     * @param {(Array.<String>)} LettersArr Массив букв, например, `["а", "б"]`.
+     * @returns {(String)} Результат объединения - `"а-б"`.
      */
     static Implode(Separator, LettersArr) {
         res := ""
@@ -244,9 +244,9 @@ class NCLStr {
 
     /**
      * Разбивает строку на части, использую шаблон.
-     * @param {(String)} Pattern Шаблон разбития
-     * @param {(String)} Str Строка, которую нужно разбить
-     * @returns {(Array.<String>)} Разбитый массив 
+     * @param {(String)} Pattern Шаблон разбития.
+     * @param {(String)} Str Строка, которую нужно разбить.
+     * @returns {(Array.<String>)} Разбитый массив.
      */
     static Explode(Pattern, Str) {
 
@@ -310,8 +310,8 @@ class NCLNameCaseCore extends NCL {
     /**
      * Готовность системы:
      * - Все слова идентифицированы (известо к какой части ФИО относится слово)
-     * - У всех слов определен пол
-     * Если все сделано стоит флаг `true`, при добавлении нового слова флаг сбрасывается на `false`
+     * - У всех слов определен пол  
+     * Если все сделано стоит флаг `true`, при добавлении нового слова флаг сбрасывается на `false`.
      * @property {(Boolean)} Ready
      */
     Ready {
@@ -325,7 +325,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * Если все текущие слова были просклонены, и в каждом слове уже есть
      * результат склонения, тогда `true`.  
-     * Если было добавлено новое слово, флаг сбрасывается на `false`
+     * Если было добавлено новое слово, флаг сбрасывается на `false`.
      * @property {(Boolean)} Finished
      */
     Finished {
@@ -339,7 +339,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * Массив содержит елементы типа `NCLNameCaseWord`.  
      * Это все слова которые нужно обработать и просклонять.
-     * @property {(Array)} Words
+     * @property {(Array.<NCLNameCaseWord>)} Words
      */
     Words {
         get {
@@ -472,7 +472,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Устанавливает слово текущим для работы системы. Очищает кэш слова.
-     * @param {(String)} Word Слово, которое нужно установить
+     * @param {(String)} Word Слово, которое нужно установить.
      */
     SetWorkingWord(Word) {
         ; Сбрасываем настройки
@@ -497,9 +497,9 @@ class NCLNameCaseCore extends NCL {
      * Если `StopAfter = 0`, вырезает `Length` последних букв из текущего слов
      * `this.WorkingWord`.  
      * Если нет - вырезает `StopAfter` букв, начиная от `Length` с конца.
-     * @param {(Int)} Length Количество букв с конца
-     * @param {(Int)} StopAfter Количество вырезанных букв (0 - все)
-     * @returns {(String)} Требуемая подстрока
+     * @param {(Int)} Length Количество букв с конца.
+     * @param {(Int)} StopAfter Количество вырезанных букв (`0` = все).
+     * @returns {(String)} Требуемая подстрока.
      */
     Last(Length := 1, StopAfter := 0) {
         ; Сколько букв нужно вырезать все или только часть
@@ -573,8 +573,8 @@ class NCLNameCaseCore extends NCL {
     /**
      * Мой аналог функции in_array() из PHP:
      * {@link https://www.php.net/manual/en/function.in-array.php}
-     * @param {(String)} Needle
-     * @param {(Array)} Haystack
+     * @param {(String)} Needle Искомое значение.
+     * @param {(Array.<String>)} Haystack Массив.
      * @param {(Boolean)} Strict
      * @returns {(Boolean)}
      */
@@ -595,8 +595,8 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Функция проверяет, входит ли имя `NameNeedle` в перечень имен `Names`.
-     * @param {(String)} NameNeedle имя, которое нужно найти.
-     * @param {(Array)} Names перечень имён, в котором нужно найти имя.
+     * @param {(String)} NameNeedle Имя, которое нужно найти.
+     * @param {(Array)} Names Перечень имён, в котором нужно найти имя.
      * @returns {(Boolean)}
      */
     InNames(NameNeedle, Names) {
@@ -615,10 +615,10 @@ class NCLNameCaseCore extends NCL {
     /**
      * Склоняет слово `Word`, удаляя из него `ReplaceLast` последних букв,
      * и добавляя в каждый падеж окончание из массива `Endings`.
-     * @param {(String)} Word слово, к которому нужно добавить окончания
-     * @param {(Array)} Endings массив окончаний
-     * @param {(Int)} ReplaceLast сколько последних букв нужно убрать из
-     * начального слова
+     * @param {(String)} Word Слово, к которому нужно добавить окончания.
+     * @param {(Array.<String>)} Endings Массив окончаний.
+     * @param {(Int)} ReplaceLast Сколько последних букв нужно убрать из
+     * начального слова.
      */
     WordForms(Word, Endings, ReplaceLast := 0) {
         ; Создаем массив с именительный падежом
@@ -640,7 +640,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * В массив `this.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Firstname` и пометкой, что это имя.
-     * @param {(String)} Firstname Имя
+     * @param {(String)} Firstname Имя.
      * @returns {(NCLNameCaseCore)}
      */
     SetFirstName(Firstname?) {
@@ -672,7 +672,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * В массив `This.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Fathername` и пометкой, что это отчество.
-     * @param {(String)} Fathername Отчество
+     * @param {(String)} Fathername Отчество.
      * @returns {(NCLNameCaseCore)}
      */
     SetFatherName(Fathername?) {
@@ -690,7 +690,7 @@ class NCLNameCaseCore extends NCL {
      * - `0` - не определено
      * - `NCL.MAN` - мужчина
      * - `NCL.WOMAN` - женщина
-     * @param {(Int)} Gender пол, который нужно установить
+     * @param {(Int)} Gender Пол, который нужно установить.
      * @returns {(NCLNameCaseCore)}
      */
     SetGender(Gender := 0) {
@@ -702,9 +702,9 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * В систему заносится сразу фамилия, имя, отчество.
-     * @param {(String)} SecondName Фамилия
-     * @param {(String)} FirstName Имя
-     * @param {(String)} FatherName Отчество
+     * @param {(String)} SecondName Фамилия.
+     * @param {(String)} FirstName Имя.
+     * @param {(String)} FatherName Отчество.
      * @returns {(NCLNameCaseCore)}
      */
     SetFullName(SecondName?, FirstName?, FatherName?) {
@@ -717,7 +717,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * В массив `this.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Firstname` и пометкой, что это имя.
-     * @param {(String)} Firstname Имя
+     * @param {(String)} Firstname Имя.
      * @returns {(NCLNameCaseCore)}
      */
     SetName(Firstname?) => this.SetFirstName(Firstname?)
@@ -726,7 +726,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * В массив `this.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Secondname` и пометкой, что это фамилия.
-     * @param {(String)} Secondname Фамилия
+     * @param {(String)} Secondname Фамилия.
      * @returns {(NCLNameCaseCore)}
      */
     SetLastName(Secondname?) => this.SetSecondName(Secondname?)
@@ -736,7 +736,7 @@ class NCLNameCaseCore extends NCL {
      * В массив `this.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Secondname` и пометкой, что это фамилия.
      * @deprecated Вроде бы нигде не используется, но пока оставлю тут.
-     * @param {(String)} Secondname Фамилия
+     * @param {(String)} Secondname Фамилия.
      * @returns {(NCLNameCaseCore)}
      */
     SetSirName(Secondname?) => this.SetSecondName(Secondname?)
@@ -744,7 +744,7 @@ class NCLNameCaseCore extends NCL {
     /**
      * Если слово `Word` не идентифицировано, определяется имя это, фамилия
      * или отчество.
-     * @param {(NCLNameCaseWord)} Word Слово, которое нужно идентифицировать
+     * @param {(NCLNameCaseWord)} Word Слово, которое нужно идентифицировать.
      */
     PrepareNamePart(Word) {
         if (Word.GetNamePart() = "") {
@@ -764,7 +764,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Определяет пол для слова `Word`.
-     * @param {(NCLNameCaseWord)} Word Слово, для которого нужно определить пол
+     * @param {(NCLNameCaseWord)} Word Слово, для которого нужно определить пол.
      */
     PrepareGender(Word) {
         if (!Word.IsGenderSolved()) {
@@ -781,7 +781,7 @@ class NCLNameCaseCore extends NCL {
      * Для всех слов проверяет определен ли пол, если нет - определяет его.  
      * После этого расчитывает пол для всех слов, и устанавливает такой пол
      * всем словам.
-     * @returns {(Boolean)} Был ли определен пол
+     * @returns {(Boolean)} Был ли определен пол.
      */
     SolveGender() {
         ; Ищем, может гдето пол уже установлен
@@ -847,7 +847,7 @@ class NCLNameCaseCore extends NCL {
      * - `0` - не определено
      * - `NCL.MAN` - мужчина
      * - `NCL.WOMAN` - женщина
-     * @returns {(Int)} текущий пол человека
+     * @returns {(Int)} Текущий пол человека.
      */
     GenderAutoDetect() {
         this.PrepareEverything()
@@ -888,9 +888,9 @@ class NCLNameCaseCore extends NCL {
      * - N - Имя
      * - F - Отчество
      * @param {(String)} Fullname Cтрока, для которой необходимо определить
-     * формат
+     * формат.
      * @returns {(Array)} Формат, в котором записано имя. Массив типа
-     * `this.Words`
+     * `this.Words`.
      */
     SplitFullName(Fullname) {
 
@@ -918,8 +918,8 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(String)} Fullname Строка, для которой нужно определить формат
-     * @returns {(String)} Формат в котором записано имя
+     * @param {(String)} Fullname Строка, для которой нужно определить формат.
+     * @returns {(String)} Формат, в котором записано имя.
      */
     GetFullNameFormat(Fullname) {
         this.FullReset()
@@ -935,7 +935,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Склоняет `Word` по нужным правилам, в зависимости от пола и типа слова.
-     * @param {(NCLNameCaseWord)} Word Слово, которое нужно просклонять
+     * @param {(NCLNameCaseWord)} Word Слово, которое нужно просклонять.
      */
     WordCase(Word) {
         if Type(Word) != "NCLNameCaseWord"
@@ -1049,9 +1049,9 @@ class NCLNameCaseCore extends NCL {
      * Если указан номер падежа `Number`, возвращается строка с таким номером
      * падежа.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(NCLNameCaseWord)} Word Слово, для которого нужно вернуть падеж
-     * @param {(Int)} Number Номер падежа, который нужно вернуть
-     * @returns {(Array.<String>|String)} Массив|строка с нужным падежом
+     * @param {(NCLNameCaseWord)} Word Слово, для которого нужно вернуть падеж.
+     * @param {(Int)} Number Номер падежа, который нужно вернуть.
+     * @returns {(Array.<String>|String)} Массив|строка с нужным падежом.
      */
     GetWordCase(Word, Number?) {
         Cases := Word.GetNameCases()
@@ -1066,10 +1066,10 @@ class NCLNameCaseCore extends NCL {
      * Если нужно просклонять несколько слов, их необходимо собрать в одну
      * строку.  
      * Эта функция собирает все слова из `IndexArray` в одну строку.
-     * @param {(Array)} IndexArray Слова, которые необходимо собрать вместе
-     * @param {(Int)} Number Номер падежа
+     * @param {(Array)} IndexArray Слова, которые необходимо собрать вместе.
+     * @param {(Int)} Number Номер падежа.
      * @returns {(Array|String)} Массив со всеми падежами, либо строка с одним
-     * падежом
+     * падежом.
      */
     GetCasesConnected(IndexArray, Number?) {
         ReadyArr := []
@@ -1110,9 +1110,9 @@ class NCLNameCaseCore extends NCL {
      * Функция ставит имя в нужный падеж.  
      * Если указан `Number` падежа, возвращает строку с указанным падежом.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(Int)} Number Номер падежа
+     * @param {(Int)} Number Номер падежа.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     GetFirstNameCase(Number?) {
         this.AllWordCases()
@@ -1124,9 +1124,9 @@ class NCLNameCaseCore extends NCL {
      * Функция ставит фамилию в нужный падеж.  
      * Если указан `Number` падежа, возвращает строку с указанным падежом.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(Int)} Number Номер падежа
+     * @param {(Int)} Number Номер падежа.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     GetSecondNameCase(Number?) {
         this.AllWordCases()
@@ -1138,9 +1138,9 @@ class NCLNameCaseCore extends NCL {
      * Функция ставит отчество в нужный падеж.  
      * Если указан `Number` падежа, возвращает строку с указанным падежом.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(Int)} Number Номер падежа
+     * @param {(Int)} Number Номер падежа.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     GetFatherNameCase(Number?) {
         this.AllWordCases()
@@ -1154,11 +1154,11 @@ class NCLNameCaseCore extends NCL {
      * Если номер падежа `CaseNumber` указан, возвращает строку с таким номером
      * падежа.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(String)} FirstName Имя, которое нужно просклонять
-     * @param {(Int)} CaseNumber Номер падежа
-     * @param {(Int)} Gender Пол, который нужно использовать
+     * @param {(String)} FirstName Имя, которое нужно просклонять.
+     * @param {(Int)} CaseNumber Номер падежа.
+     * @param {(Int)} Gender Пол, который нужно использовать.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     qFirstName(FirstName, CaseNumber?, Gender := 0) {
         this.FullReset()
@@ -1175,11 +1175,11 @@ class NCLNameCaseCore extends NCL {
      * Если номер падежа `CaseNumber` указан, возвращает строку с таким номером
      * падежа.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(String)} SecondName Фамилия, которую нужно просклонять
-     * @param {(Int)} CaseNumber Номер падежа
-     * @param {(Int)} Gender Пол, который нужно использовать
+     * @param {(String)} SecondName Фамилия, которую нужно просклонять.
+     * @param {(Int)} CaseNumber Номер падежа.
+     * @param {(Int)} Gender Пол, который нужно использовать.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     qSecondName(SecondName, CaseNumber?, Gender := 0) {
         this.FullReset()
@@ -1197,11 +1197,11 @@ class NCLNameCaseCore extends NCL {
      * Если номер падежа `CaseNumber` указан, возвращает строку с таким номером
      * падежа.  
      * Если нет - возвращает массив со всеми падежами текущего слова.
-     * @param {(String)} FatherName Отчество, которое нужно просклонять
-     * @param {(Int)} CaseNumber Номер падежа
-     * @param {(Int)} Gender Пол, который нужно использовать
+     * @param {(String)} FatherName Отчество, которое нужно просклонять.
+     * @param {(Int)} CaseNumber Номер падежа.
+     * @param {(Int)} Gender Пол, который нужно использовать.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     qFatherName(FatherName, CaseNumber?, Gender := 0) {
         this.FullReset()
@@ -1219,8 +1219,8 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(String)} Format Формат. Например `"S N F"`
-     * @returns {(Array.<String>)} Массив со всеми падежами
+     * @param {(String)} Format Формат. Например `"S N F"`.
+     * @returns {(Array.<String>)} Массив со всеми падежами.
      */
     GetFormattedArray(Format) {
         if (Type(Format) = "Array") {
@@ -1261,8 +1261,8 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(Array)} Format Массив с форматом
-     * @returns {(Array.<String>)} Массив со всеми падежами
+     * @param {(Array)} Format Массив с форматом.
+     * @returns {(Array.<String>)} Массив со всеми падежами.
      */
     GetFormattedArrayHard(Format) {
         Result := []
@@ -1288,9 +1288,9 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(Int)} CaseNum Номер падежа
-     * @param {(Array)} Format Массив с форматом
-     * @returns {(String)} Строка в нужном падеже
+     * @param {(Int)} CaseNum Номер падежа.
+     * @param {(Array)} Format Массив с форматом.
+     * @returns {(String)} Строка в нужном падеже.
      */
     GetFormattedHard(CaseNum?, Format := []) {
         Result := ""
@@ -1307,9 +1307,9 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(Int)} CaseNum Номер падежа
-     * @param {(String)} Format Строка с форматом
-     * @returns {(String)} Строка в нужном падеже
+     * @param {(Int)} CaseNum Номер падежа.
+     * @param {(String)} Format Строка с форматом.
+     * @returns {(String)} Строка в нужном падеже.
      */
     GetFormatted(CaseNum?, Format := "S N F") {
         this.AllWordCases()
@@ -1349,14 +1349,14 @@ class NCLNameCaseCore extends NCL {
      * - S - Фамилия
      * - N - Имя
      * - F - Отчество
-     * @param {(String)} SecondName фамилия
-     * @param {(String)} FirstName имя
-     * @param {(String)} FatherName отчество
-     * @param {(Int)} Gender пол
-     * @param {(Int)} CaseNum номер падежа
-     * @param {(String)} Format формат
+     * @param {(String)} SecondName Фамилия.
+     * @param {(String)} FirstName Имя.
+     * @param {(String)} FatherName Отчество.
+     * @param {(Int)} Gender Пол.
+     * @param {(Int)} CaseNum Номер падежа.
+     * @param {(String)} Format Формат.
      * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     qFullName(SecondName?, FirstName?, FatherName?, Gender?, CaseNum?,
               Format := "S N F") {
@@ -1374,11 +1374,11 @@ class NCLNameCaseCore extends NCL {
     /**
      * Склоняет ФИО `FullName` в падеж `CaseNum` по правилам пола `Gender`.  
      * Возвращает результат в таком же формате, каком он и был.
-     * @param {(String)} FullName ФИО
-     * @param {(Int)} CaseNum Номер падежа
-     * @param {(Int)} Gender Пол человека
+     * @param {(String)} FullName ФИО.
+     * @param {(Int)} CaseNum Номер падежа.
+     * @param {(Int)} Gender Пол человека.
      * @returns {(Array|String)} Массив со всеми падежами, либо строка
-     * с одним падежом
+     * с одним падежом.
      */
     q(FullName, CaseNum?, Gender?) {
         this.FullReset()
@@ -1391,33 +1391,33 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Определяет пол человека по ФИО
-     * @param {(String)} Fullname ФИО
-     * @returns {(Int)} Пол человека
+     * @param {(String)} FullName ФИО.
+     * @returns {(Int)} Пол человека.
      */
-    GenderDetect(Fullname) {
+    GenderDetect(FullName) {
         this.FullReset()
-        this.SplitFullName(Fullname)
+        this.SplitFullName(FullName)
         return this.GenderAutoDetect()
     }
 
     /**
      * Возвращает внутренний массив `this.Words`, каждая запись имеет тип
      * `NCLNameCaseWord`.
-     * @returns {Array.<NCLNameCaseWord>} Массив всех слов в системе
+     * @returns {Array.<NCLNameCaseWord>} Массив всех слов в системе.
      */
     GetWordsArray() => this.Words
 
     /**
      * Функция пытается применить цепочку правил для мужских имен.
      * @returns {(Boolean)} `true` - если было использовано правило из списка,
-     * `false` - если правило не было найдено
+     * `false` - если правило не было найдено.
      */
     ManFirstName() => false
 
     /**
      * Функция пытается применить цепочку правил для женских имен.
      * @returns {(Boolean)} `true` - если было использовано правило из списка,
-     * `false` - если правило не было найдено
+     * `false` - если правило не было найдено.
      */
     WomanFirstName() => false
 
@@ -1425,28 +1425,28 @@ class NCLNameCaseCore extends NCL {
     /**
      * Функция пытается применить цепочку правил для мужских фамилий.
      * @returns {(Boolean)} `true` - если было использовано правило из списка,
-     * `false` - если правило не было найдено
+     * `false` - если правило не было найдено.
      */
     ManSecondName() => false
 
     /**
      * Функция пытается применить цепочку правил для женских фамилий.
      * @returns {(Boolean)} `true` - если было использовано правило из списка,
-     * `false` - если правило не было найдено
+     * `false` - если правило не было найдено.
      */
     WomanSecondName() => false
 
     /**
      * Функция склоняет мужские отчества.
      * @returns {(Boolean)} `true` - если слово было успешно изменено, `false` -
-     * если не получилось этого сделать
+     * если не получилось этого сделать.
      */
     ManFatherName() => false
 
     /**
      * Функция склоняет женские отчества.
      * @returns {(Boolean)} `true` - если слово было успешно изменено, `false` -
-     * если не получилось этого сделать
+     * если не получилось этого сделать.
      */
     WomanFatherName() => false
 
@@ -1457,7 +1457,7 @@ class NCLNameCaseCore extends NCL {
      * 
      * Определение пола по правилам имен.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
-     * определить пол
+     * определить пол.
      */
     GenderByFirstName(Word) {
         this.SetWorkingWord(Word.GetWord())
@@ -1541,7 +1541,7 @@ class NCLNameCaseCore extends NCL {
      * 
      * Определение пола по правилам фамилий.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
-     * определить пол
+     * определить пол.
      */
     GenderBySecondName(Word) {
         this.SetWorkingWord(Word.GetWord())
@@ -1572,7 +1572,7 @@ class NCLNameCaseCore extends NCL {
      * НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.</i>
      * 
      * Определение пола по правилам отчеств.
-     * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол
+     * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол.
      */
     GenderByFatherName(Word) {
         if Type(Word) != "NCLNameCaseWord"
@@ -1596,7 +1596,7 @@ class NCLNameCaseCore extends NCL {
      * - <b>N</b> - имя
      * - <b>S</b> - фамилия
      * - <b>F</b> - отчество
-     * @param {(NCLNameCaseWord)} Word Объект класса слов, который необходимо идентифицировать
+     * @param {(NCLNameCaseWord)} Word Объект класса слов, который необходимо идентифицировать.
      */
     DetectNamePart(Word) {
         Namepart := Word.GetWord()
@@ -1964,7 +1964,7 @@ class NCLNameCaseWord {
      * маленькими:  
      * - `x` - маленькая буква
      * - `X` - большая буква
-     * @property {(Array.<String>)} LetterMask Массив строк типа `["X", "x", "x", "x", "x", "x",]`
+     * @property {(Array.<String>)} LetterMask Массив строк типа `["X", "x", "x", "x", "x", "x",]`.
      */
     LetterMask {
         get {
@@ -2018,7 +2018,7 @@ class NCLNameCaseWord {
 
     /**
      * Создание нового объекта со словом `Word`.
-     * @property {(String)} Word Слово
+     * @property {(String)} Word Слово.
      */
     __New(Word) {
         this.WordOrig := Word
@@ -2031,7 +2031,7 @@ class NCLNameCaseWord {
      * были большими, а какие маленькими:  
      * - `X` - большая буква
      * - `x` - маленькая буква
-     * @param {(String)} Word Слово, для которого будет создаваться маска
+     * @param {(String)} Word Слово, для которого будет создаваться маска.
      */
     GenerateMask(Word) {
         Letters := NCLStr.SplitLetters(word)
@@ -2083,9 +2083,9 @@ class NCLNameCaseWord {
 
     /**
      * Сохраняет результат склонения текущего слова.
-     * @param {(Array)} NameCases Массив со всеми падежами
+     * @param {(Array)} NameCases Массив со всеми падежами.
      * @param {(Boolean)} IsReturnMask Флаг необходимости возврата к начальной
-     * маске
+     * маске.
      */
     SetNameCases(NameCases, IsReturnMask := true) {
         this.NameCases := NameCases
@@ -2101,8 +2101,8 @@ class NCLNameCaseWord {
 
     /**
      * Возвращает строку с нужным падежом текущего слова.
-     * @param {(Int)} Number Нужный падеж
-     * @returns {(String)} Строка с нужным падежом текущего слова
+     * @param {(Int)} Number Нужный падеж.
+     * @returns {(String)} Строка с нужным падежом текущего слова.
      */
     getNameCase(Number) {
         if this.NameCases.Has(Number) {
@@ -2113,7 +2113,7 @@ class NCLNameCaseWord {
 
     /**
      * Расчитывает и возвращает пол текущего слова.
-     * @returns {(Int)} Пол текущего слова
+     * @returns {(Int)} Пол текущего слова.
      */
     Gender() {
         if !this.GenderSolved {
@@ -2129,8 +2129,8 @@ class NCLNameCaseWord {
     /**
      * Устанавливает вероятности того, что даное слово является мужчиной или
      * женщиной.
-     * @param {(Int)} Man вероятность того, что слово мужчина
-     * @param {(Int)} Woman верятность того, что слово женщина
+     * @param {(Int)} Man Вероятность того, что слово мужчина.
+     * @param {(Int)} Woman Верятность того, что слово женщина.
      */
     SetGender(Man, Woman) {
         this.GenderMan := Man
@@ -2142,7 +2142,7 @@ class NCLNameCaseWord {
      * - `0` - не определено
      * - `NCL.MAN` - мужчина
      * - `NCL.WOMAN` - женщина
-     * @param {(Int)} Gender пол человека
+     * @param {(Int)} Gender Пол человека.
      */
     SetTrueGender(Gender) {
         this.GenderSolved := Gender
@@ -2151,7 +2151,7 @@ class NCLNameCaseWord {
     /**
      * Возвращает массив вероятности того, что даное слово относится к мужчине
      * или женщине.
-     * @returns {(Map)} Массив вероятностей
+     * @returns {(Map)} Массив вероятностей.
      */
     GetGender() => Map(NCL.MAN, this.GenderMan, NCL.WOMAN, this.GenderWoman)
 
@@ -2161,7 +2161,7 @@ class NCLNameCaseWord {
      * - `S` - Фамилия
      * - `N` - Имя
      * - `F` - Отчество
-     * @param {(String)} NamePart Тип слова
+     * @param {(String)} NamePart Тип слова.
      */
     SetNamePart(NamePart) {
         this.NamePart := NamePart
@@ -2173,20 +2173,20 @@ class NCLNameCaseWord {
      * - `S` - Фамилия
      * - `N` - Имя
      * - `F` - Отчество
-     * @returns {(String)} Тип слова
+     * @returns {(String)} Тип слова.
      */
     GetNamePart() => this.NamePart
     
 
     /**
      * Возвращает текущее слово.
-     * @returns {(String)} Текущее слово
+     * @returns {(String)} Текущее слово.
      */
     GetWord() => this.Word
 
     /**
      * Возвращает текущее изначальное слово.
-     * @returns {(String)} текущее слово
+     * @returns {(String)} Текущее слово.
      */
     GetWordOrig() => this.WordOrig
 
@@ -2195,13 +2195,13 @@ class NCLNameCaseWord {
      * предается окончательное решение.  
      * Эта функция определяет было ли принято окончательное решение.
      * @returns {(Boolean)} Было ли принято окончательное решение по поводу
-     * пола текущего слова
+     * пола текущего слова.
      */
     IsGenderSolved() => this.GenderSolved ? true : false
 
     /**
      * Устанавливает номер правила, по которому склонялось текущее слово.
-     * @param {(Int)} RuleID Номер правила
+     * @param {(Int)} RuleID Номер правила.
      */
     SetRule(RuleID) {
         this.Rule := RuleID
@@ -2228,38 +2228,40 @@ class NCLNameCaseRu extends NCLNameCaseCore {
 
     /**
      * Количество падежей в языке.
-     * @property {(Int)} CaseCount
+     * @property {(Int)} CASECOUNT
      */
     CASECOUNT => 6
 
     /**
      * Список гласных русского языка.
-     * @property {(String)} Vowels
+     * @property {(String)} VOWELS
      */
     VOWELS => "аеёиоуыэюя"
 
     /**
      * Список согласных русского языка.
-     * @property {(String)} Consonant
+     * @property {(String)} CONSONANT
      */
     CONSONANT => "бвгджзйклмнпрстфхцчшщ"
     
     /**
      * Окончания имен/фамилий, который не склоняются
-     * @var array 
+     * @property {(Array.<String>)} OVO
      */
     OVO => [ 'ово', 'аго', 'яго', 'ирь']
+    
     /**
      * Окончания имен/фамилий, который не склоняются
-     * @property {(array)} IH
+     * @property {(Array.<String>)} IH
      */
     IH => ['их', 'ых', 'ко', 'уа'] ; Бенуа, Франсуа
+
     /**
-     * Список окончаний, характерных для фамилий  
+     * Список окончаний, характерных для фамилий.  
      * По шаблону {letter}* где * любой символ кроме тех, что в {exclude}
-     * @var array of {letter}=>{exclude}
+     * @property {(Map.<String, String>)} SPLITSECONDEXCLUDE
      */
-    splitSecondExclude := Map(
+    SPLITSECONDEXCLUDE => Map(
         'а', 'взйкмнпрстфя',
         'б', 'а',
         'в', 'аь',
@@ -2295,22 +2297,22 @@ class NCLNameCaseRu extends NCLNameCaseCore {
         'я', 'нс'
     )
 
-        NAMES_MAN := [
-            'Вова', 'Анри', 'Питер', 'Пауль', 'Франц', 'Вильям', 'Уильям',
-            'Альфонс', 'Ганс', 'Франс', 'Филиппо', 'Андреа', 'Корнелис',
-            'Фрэнк', 'Леонардо', 'Джеймс', 'Отто', 'жан-пьер', 'Джованни',
-            'Джозеф', 'Педро', 'Адольф', 'Уолтер', 'Антонио', 'Якоб', 'Эсташ',
-            'Адрианс', 'Франческо', 'Доменико', 'Ханс', 'Гун', 'Шарль',
-            'Хендрик', 'Амброзиус', 'Таддео', 'Фердинанд', 'Джошуа', 'Изак',
-            'Иоганн', 'Фридрих', 'Эмиль', 'Умберто', 'Франсуа', 'Ян', 'Эрнст',
-            'Георг', 'Карл'
-        ]
+    NAMES_MAN := [
+        'Вова', 'Анри', 'Питер', 'Пауль', 'Франц', 'Вильям', 'Уильям',
+        'Альфонс', 'Ганс', 'Франс', 'Филиппо', 'Андреа', 'Корнелис',
+        'Фрэнк', 'Леонардо', 'Джеймс', 'Отто', 'жан-пьер', 'Джованни',
+        'Джозеф', 'Педро', 'Адольф', 'Уолтер', 'Антонио', 'Якоб', 'Эсташ',
+        'Адрианс', 'Франческо', 'Доменико', 'Ханс', 'Гун', 'Шарль',
+        'Хендрик', 'Амброзиус', 'Таддео', 'Фердинанд', 'Джошуа', 'Изак',
+        'Иоганн', 'Фридрих', 'Эмиль', 'Умберто', 'Франсуа', 'Ян', 'Эрнст',
+        'Георг', 'Карл'
+    ]
 
     /**
      * Мужские имена, оканчивающиеся на любой <u>ь</u> и <u>-й</u>, 
      * скло­няются так же, как обычные существительные мужского рода.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule1() {
         /*
@@ -2340,7 +2342,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Мужские имена, оканчивающиеся на любой твёрдую согласную, 
      * склоняются так же, как обычные существительные мужского рода.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule2() {
         if (this.Contains(this.Last(1), this.CONSONANT)) {
@@ -2376,7 +2378,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * <u>-ия</u>, <u>-ея</u>, независимо от языка, из которого они происходят,
      * склоняются, как существительные с соответствующими окончаниями.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule3() {
         if (this.Last(1) == "а") {
@@ -2406,7 +2408,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Мужские фамилии, оканчивающиеся на <u>-ь</u> и <u>-й</u>, склоняются так
      * же, как обычные существительные мужского рода.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule4() {
         if (this.Contains(this.Last(1), 'ьй')) {
@@ -2457,7 +2459,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Мужские фамилии, оканчивающиеся на <u>-к</u>.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule5() {
         if (this.Last(1) == 'к') {
@@ -2495,7 +2497,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Мужские фамилии на согласную, выбираем <u>ем/ом/ым</u>.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule6() {
         if (this.Last(1) == 'ч') {
@@ -2523,7 +2525,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Мужские фамилии на <u>-а</u> и <u>-я</u>.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule7() {
         if (this.Last(1) == "а")  {
@@ -2557,7 +2559,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Не склоняются мужские фамилии.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     manRule8() {
         if (this.Contains(this.Last(3), this.OVO)
@@ -2576,7 +2578,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Мужские и женские имена, оканчивающиеся на <u>-а</u>, склоняются, 
      * как и любые существительные с таким же окончанием.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     womanRule1() {
         if (this.Last(1) == "а" and this.Last(2, 1) != 'и') {
@@ -2607,7 +2609,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * <u>-ия</u>, <u>-ея</u>, независимо от языка, из которого они происходят,
      * склоняются, как сущест­вительные с соответствующими окончаниями.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     womanRule2() {
         if (this.Last(1) == "я") {
@@ -2628,7 +2630,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Русские женские имена, оканчивающиеся на мягкую согласную, склоняются, 
      * как существительные женского рода типа дочь/тень.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     womanRule3() {
         if (this.Last(1) == "ь") {
@@ -2643,7 +2645,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Женские фамилия, оканчивающиеся на <u>-а</u>/<u>-я</u>, склоняются,
      * как и любые существительные с таким же окончанием.
      * @returns {(Boolean)} `true`, если правило было задействовано, и `false`,
-     * если нет
+     * если нет.
      */
     womanRule4() {
         if (this.Last(1) == "а") {
@@ -2672,7 +2674,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Функция пытается применить цепочку правил для мужских имен.
      * @returns {(Boolean)} `true`, если было использовано правило из списка,
-     * `false` - если нет
+     * `false` - если нет.
      */
     manFirstName() {
         if (this.InNames(this.WorkingWord, ['Старший', 'Младший'])) {
@@ -2691,28 +2693,28 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Функция пытается применить цепочку правил для женских имен.
      * @returns {(Boolean)} `true`, если было использовано правило из списка,
-     * `false` - если нет
+     * `false` - если нет.
      */
     womanFirstName() => this.RulesChain('woman', [1, 2, 3])
 
     /**
      * Функция пытается применить цепочку правил для мужских фамилий.
      * @returns {(Boolean)} `true`, если было использовано правило из списка,
-     * `false` - если нет
+     * `false` - если нет.
      */
     manSecondName() => this.RulesChain('man', [8, 4, 5, 6, 7])
 
     /**
      * Функция пытается применить цепочку правил для женских фамилий.
      * @returns {(Boolean)} `true`, если было использовано правило из списка,
-     * `false` - если нет
+     * `false` - если нет.
      */
     womanSecondName() => this.RulesChain('woman', [4])
 
     /**
      * Функция склоняет мужские отчества.
      * @returns {(Boolean)} `true`, если слово было успешно изменено, `false` - 
-     * если не получилось этого сделать
+     * если не получилось этого сделать.
      */
     manFatherName() { 
         ; Проверяем действительно ли отчество
@@ -2729,7 +2731,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Функция склоняет женские отчества.
      * @returns {(Boolean)} `true`, если слово было успешно изменено, `false` - 
-     * если не получилось этого сделать
+     * если не получилось этого сделать.
      */
     womanFatherName() {
         ; Проверяем действительно ли отчество
@@ -2742,7 +2744,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
 
     /**
      * Определение пола по правилам имен.
-     * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол
+     * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол.
      */
     GenderByFirstName(Word) {
         this.SetWorkingWord(Word.GetWord())
@@ -2825,7 +2827,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Определение пола по правилам фамилий.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
-     * определить пол
+     * определить пол.
      */
     GenderBySecondName(Word) {
         this.SetWorkingWord(Word.GetWord())
@@ -2853,7 +2855,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     /**
      * Определение пола по правилам отчеств.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
-     * определить пол
+     * определить пол.
      */
     GenderByFatherName(Word) {
         this.SetWorkingWord(Word.GetWord())
