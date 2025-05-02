@@ -1043,7 +1043,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(Int)} Number номер падежа, который нужно вернуть
      * @return {(Array|String)} с нужным падежом
      */
-    GetWordCase(Word, Number := unset) {
+    GetWordCase(Word, Number?) {
         if Type(Word) != "NCLNameCaseWord"
             throw TypeError(A_LineFile A_Tab A_ThisFunc A_Tab "Параметром должен был объект типа 'NCLNameCaseWord', но вместо него - " Type(Word))
         Cases := Word.GetNameCases()
@@ -1306,10 +1306,10 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Format строка с форматом
      * @returns {(String)} строка в нужном падеже
      */
-    GetFormatted(CaseNum := 1, Format := "S N F") {
+    GetFormatted(CaseNum?, Format := "S N F") {
         this.AllWordCases()
         ; Если не указан падеж используем другую функцию
-        if (CaseNum = "" or !CaseNum) {
+        if !IsSet(CaseNum) {
             return this.GetFormattedArray(Format)
         }
         ; Если формат сложный
@@ -1352,16 +1352,16 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Format формат
      * @returns {(Array|String)} либо массив со всеми падежами, либо строка
      */
-    qFullName(SecondName := "", FirstName := "", FatherName := "", Gender := 0, CaseNum := 0, Format := "S N F") {
+    qFullName(SecondName := "", FirstName := "", FatherName := "", Gender?, CaseNum?, Format := "S N F") {
         this.FullReset()
         this.SetFirstName(FirstName)
         this.SetSecondName(SecondName)
         this.SetFatherName(FatherName)
-        if (Gender) {
+        if IsSet(Gender) {
             this.SetGender(Gender)
         }
 
-        return this.GetFormatted(CaseNum, Format)
+        return this.GetFormatted(CaseNum?, Format)
     }
 
     /**
@@ -1378,7 +1378,7 @@ class NCLNameCaseCore extends NCL {
         if IsSet(Gender) {
             this.SetGender(Gender)
         }
-        return this.GetFormatted(CaseNum, Format)
+        return this.GetFormatted(CaseNum?, Format)
     }
 
     /**
@@ -2940,37 +2940,97 @@ TestNames := [
     "Беспалов Андрей Михайлович",
     "Мубаракшина Камилла Булатовна"
 ]
-
 #Include <AHKv2_Scripts\Json>
-; for name in TestNames {
-;     loop 6 {
-;         a := NCLNameCaseRu()
-;         namepart := StrSplit(name, A_Space)
-;         res := a.qFullName(namepart[1], namepart[2], namepart[3],, A_Index)
-;         OutputDebug (res) '`n'
-;     }
-;     OutputDebug "`n`n"
-; }
-; for name in TestNames {
-;     loop 6 {
-;         a := NCLNameCaseRu()
-;         res := a.q(name, A_Index)
-;         OutputDebug (res) '`n'
-;     }
-;     OutputDebug "`n"
-; }
-; a := NCLNameCaseRu()
-; loop 5
-; OutputDebug JSON.stringify(a.qFullName("Портнов", "Максим", "Дмитриевич"))
-; OutputDebug a.q("Портнов Максим Дмитриевич", 1) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 3) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 4) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 5) "`n"
-; OutputDebug a.q("Портнов Максим Дмитриевич", 6) "`n"
+TestMethods(TestNames) {
+    OutputDebug "Testing method: q() without specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+            OutputDebug(JSON.stringify(a.q(name)))
+            OutputDebug("`n")
+    }
 
-for name in TestNames {
-    ; loop 6 {
-        a := NCLNameCaseRu()
-        OutputDebug JSON.stringify(a.qFatherName(StrSplit(name, A_Space)[3])) "`n"
-    ; }
+    OutputDebug "Testing method: q() with specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        loop 6 {
+            OutputDebug a.q(name, A_Index) "`n"
+        }
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFullName() without specific case:`n"
+    a := NCLNameCaseRu()
+    ; qFullName(SecondName := "", FirstName := "", FatherName := "", Gender := 0, CaseNum := 0, Format := "S N F")
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        OutputDebug(JSON.stringify(a.qFullName(n*)))
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFullName() with specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        loop 6 {
+            OutputDebug a.qFullName(n[1], n[2], n[3],, A_Index) "`n"
+        }
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFirstName() without specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        OutputDebug(JSON.stringify(a.qFirstName(n[2])))
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFirstName() with specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        loop 6 {
+            OutputDebug a.qFirstName(n[2], A_Index) "`n"
+        }
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qSecondName() without specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        OutputDebug(JSON.stringify(a.qSecondName(n[1])))
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qSecondName() with specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        loop 6 {
+            OutputDebug a.qSecondName(n[1], A_Index) "`n"
+        }
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFatherName() without specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        OutputDebug(JSON.stringify(a.qFatherName(n[3])))
+        OutputDebug "`n"
+    }
+
+    OutputDebug "Testing method: qFatherName() with specific case:`n"
+    a := NCLNameCaseRu()
+    for name in TestNames {
+        n := StrSplit(name, A_Space)
+        loop 6 {
+            OutputDebug a.qFatherName(n[3], A_Index) "`n"
+        }
+        OutputDebug "`n"
+    }
+
 }
+
+TestMethods(TestNames)
