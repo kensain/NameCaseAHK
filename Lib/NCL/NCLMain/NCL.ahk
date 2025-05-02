@@ -639,8 +639,8 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Firstname имя.
      * @returns {(NCLNameCaseCore)}
      */
-    SetFirstName(Firstname := "") {
-        if Firstname != "" {
+    SetFirstName(Firstname?) {
+        if IsSet(Firstname) {
             Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Firstname))
             this.Words[-1].SetNamePart('N')
@@ -655,8 +655,8 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Secondname фамилия.
      * @returns {(NCLNameCaseCore)}
      */
-    SetSecondName(Secondname := "") {
-        if Secondname != "" {
+    SetSecondName(Secondname?) {
+        if IsSet(Secondname) {
             Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Secondname))
             this.Words[Index].SetNamePart('S')
@@ -671,8 +671,8 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Fathername отчество
      * @returns {(NCLNameCaseCore)}
      */
-    SetFatherName(Fathername := "") {
-        if Fathername != "" {
+    SetFatherName(Fathername?) {
+        if IsSet(Fathername) {
             Index := this.Words.Length + 1
             this.Words.Push(NCLNameCaseWord(Fathername))
             this.Words[Index].SetNamePart('F')
@@ -704,10 +704,10 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} FatherName отчество
      * @returns {(NCLNameCaseCore)}
      */
-    SetFullName(SecondName := "", FirstName := "", FatherName := "") {
-        this.SetFirstName(FirstName)
-        this.SetSecondName(SecondName)
-        this.SetFatherName(FatherName)
+    SetFullName(SecondName?, FirstName?, FatherName?) {
+        this.SetFirstName(FirstName?)
+        this.SetSecondName(SecondName?)
+        this.SetFatherName(FatherName?)
         return this
     }
 
@@ -717,7 +717,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Firstname имя
      * @returns {(NCLNameCaseCore)}
      */
-    SetName(Firstname := "") => this.SetFirstName(Firstname)
+    SetName(Firstname?) => this.SetFirstName(Firstname?)
     
 
     /**
@@ -726,7 +726,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Secondname фамилия
      * @return {(NCLNameCaseCore)}
      */
-    SetLastName(Secondname := "") => this.SetSecondName(Secondname)
+    SetLastName(Secondname?) => this.SetSecondName(Secondname?)
     
 
     /**
@@ -735,7 +735,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Secondname фамилия
      * @return {(NCLNameCaseCore)}
      */
-    SetSirName(Secondname := "") => this.SetSecondName(Secondname)
+    SetSirName(Secondname?) => this.SetSecondName(Secondname?)
 
     /**
      * Если слово `Word` не идентифицировано, тогда определяется это имя, фамилия или отчество.
@@ -1287,11 +1287,11 @@ class NCLNameCaseCore extends NCL {
      * @param {(Array)} Format массив с форматом
      * @returns {(String)} строка в нужном падеже
      */
-    GetFormattedHard(CaseNum := 1, Format := []) {
+    GetFormattedHard(CaseNum?, Format := []) {
         Result := ""
         for word in Format {
             Cases := word.GetNameCases()
-            Result .= Cases[caseNum] . " "
+            Result .= Cases[IsSet(CaseNum) ? CaseNum : 1] . " "
         }
         return Trim(Result)
     }
@@ -1314,7 +1314,7 @@ class NCLNameCaseCore extends NCL {
         }
         ; Если формат сложный
         else if (Type(Format) = "Array") {
-            return this.GetFormattedHard(CaseNum, Format)
+            return this.GetFormattedHard(CaseNum?, Format)
         }
         else {
             Result := ""
@@ -1352,11 +1352,11 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} Format формат
      * @returns {(Array|String)} либо массив со всеми падежами, либо строка
      */
-    qFullName(SecondName := "", FirstName := "", FatherName := "", Gender?, CaseNum?, Format := "S N F") {
+    qFullName(SecondName?, FirstName?, FatherName?, Gender?, CaseNum?, Format := "S N F") {
         this.FullReset()
-        this.SetFirstName(FirstName)
-        this.SetSecondName(SecondName)
-        this.SetFatherName(FatherName)
+        this.SetFirstName(FirstName?)
+        this.SetSecondName(SecondName?)
+        this.SetFatherName(FatherName?)
         if IsSet(Gender) {
             this.SetGender(Gender)
         }
@@ -2935,10 +2935,10 @@ class NCLNameCaseRu extends NCLNameCaseCore {
 TestNames := [
     "Портнов Максим Дмитриевич",
     "Лаптева Елена Витальевна",
-    "Возчиков Никита Сергеевич",
-    "Белова Анна Михайловна",
-    "Беспалов Андрей Михайлович",
-    "Мубаракшина Камилла Булатовна"
+    ; "Возчиков Никита Сергеевич",
+    ; "Белова Анна Михайловна",
+    ; "Беспалов Андрей Михайлович",
+    ; "Мубаракшина Камилла Булатовна"
 ]
 #Include <AHKv2_Scripts\Json>
 TestMethods(TestNames) {
@@ -2960,7 +2960,6 @@ TestMethods(TestNames) {
 
     OutputDebug "Testing method: qFullName() without specific case:`n"
     a := NCLNameCaseRu()
-    ; qFullName(SecondName := "", FirstName := "", FatherName := "", Gender := 0, CaseNum := 0, Format := "S N F")
     for name in TestNames {
         n := StrSplit(name, A_Space)
         OutputDebug(JSON.stringify(a.qFullName(n*)))
