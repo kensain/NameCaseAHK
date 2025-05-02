@@ -2483,9 +2483,9 @@ class NCLNameCaseRu extends NCLNameCaseCore {
     }
 
     /**
-     * Мужские и женские имена, оканчивающиеся на -а, склоняются, 
-     * как и любые существительные с таким же окончанием
-     * @return bool true если правило было задействовано и false если нет. 
+     * Мужские и женские имена, оканчивающиеся на `-а`, склоняются, 
+     * как и любые существительные с таким же окончанием.
+     * @returns bool true если правило было задействовано и false если нет. 
      */
     womanRule1() {
         if (this.Last(1) == "а" and this.Last(2, 1) != 'и') {
@@ -2494,7 +2494,7 @@ class NCLNameCaseRu extends NCLNameCaseCore {
                 this.Rule(101)
                 return true
             } else {
-                ; ей посля шиплячего
+                ; ей посля шипящего
                 if (this.Last(2, 1) == 'ш') {
                     this.wordForms(this.workingWord, ['и', 'е', 'у', 'ей', 'е'], 1)
                     this.Rule(102)
@@ -2935,10 +2935,10 @@ class NCLNameCaseRu extends NCLNameCaseCore {
 TestNames := [
     "Портнов Максим Дмитриевич",
     "Лаптева Елена Витальевна",
-    ; "Возчиков Никита Сергеевич",
-    ; "Белова Анна Михайловна",
-    ; "Беспалов Андрей Михайлович",
-    ; "Мубаракшина Камилла Булатовна"
+    "Возчиков Никита Сергеевич",
+    "Белова Анна Михайловна",
+    "Беспалов Андрей Михайлович",
+    "Мубаракшина Камилла Булатовна"
 ]
 #Include <AHKv2_Scripts\Json>
 TestMethods(TestNames) {
@@ -3030,6 +3030,7 @@ TestMethods(TestNames) {
         OutputDebug "`n"
     }
 
+    OutputDebug "Methods successfully tested!"
 }
 
 TestMethods(TestNames)
