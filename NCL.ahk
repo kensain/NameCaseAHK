@@ -1451,147 +1451,32 @@ class NCLNameCaseCore extends NCL {
     WomanFatherName() => false
 
     /**
-     * <i>ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU
-     * ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДТСВЕННОСТИ
-     * НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.<i> 
-     * 
      * Определение пола по правилам имен.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
      * определить пол.
      */
     GenderByFirstName(Word) {
-        this.SetWorkingWord(Word.GetWord())
 
-        Man := 0 ; Мужчина
-        Woman := 0 ; Женщина
-        ; Попробуем выжать максимум из имени
-        ; Если имя заканчивается на й, то скорее всего мужчина
-        if (this.Last(1) == 'й') {
-            Man += 0.9
-        }
-
-        ; 'по'=Филиппо; 'до'=Леонардо
-        if (this.Contains(this.Last(2), ['он', 'ов', 'ав', 'ам', 'ол', 'ан',
-                                         'рд', 'мп', 'по', 'до', 'др',
-                                         'рт'])) {
-            Man += 0.3
-        }
-        
-        if (this.Contains(this.Last(1), this.CONSONANT)) {
-            Man += 0.01
-        }
-
-        if (this.Last(1) == 'ь') {
-            Man += 0.02
-        }
-
-        if (this.Contains(this.Last(2), ['вь', 'фь', 'ль', 'на'])) {
-            Woman += 0.1
-        }
-
-        if (this.Contains(this.Last(2), ['ла'])) {
-            Woman += 0.04
-        }
-
-        if (this.Contains(this.Last(2), ['то', 'ма'])) {
-            Man += 0.01
-        }
-
-        ; 'эль' =Рафаэль, Габриэль; 'реа'=Андреа
-        if (this.Contains(this.Last(3), ['лья', 'вва', 'ока', 'ука', 'ита',
-                                         'эль', 'реа'])) {
-            Man += 0.2
-        }
-
-        if (this.Contains(this.Last(3), ['има'])) {
-            Woman += 0.15
-        }
-
-        if (this.Contains(this.Last(3), ['лия', 'ния', 'сия', 'дра', 'лла',
-                                         'кла', 'опа', 'вия'])) {
-            Woman += 0.5
-        }
-
-        if (this.Contains(this.Last(4), ['льда', 'фира', 'нина', 'лита',
-                                         'алья'])) {
-            Woman += 0.5
-        }
-        
-        if (this.InNames(this.WorkingWord, this.NAMES_MAN)) {
-            Man += 10
-        }
-        
-        if (this.InNames(this.WorkingWord, ['Бриджет', 'Элизабет', 'Маргарет',
-                                            'Джанет', 'Жаклин', 'Эвелин'])) {
-            Woman += 10
-        }
-
-        ; Исключение для Берил Кук, которая женщина
-        if (this.InNames(this.WorkingWord, ['Берил'])) {
-            Woman += 0.05
-        }
-
-        Word.SetGender(Man, Woman)
     }
 
     /**
-     * <i>ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU
-     * ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДСТВЕННОСТИ
-     * НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.</i>
-     * 
      * Определение пола по правилам фамилий.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно
      * определить пол.
      */
     GenderBySecondName(Word) {
-        this.SetWorkingWord(Word.GetWord())
 
-        Man := 0 ; Мужчина
-        Woman := 0 ; Женщина
-
-        if (this.Contains(this.Last(2), ['ов', 'ин', 'ев', 'ий', 'ёв', 'ый',
-                                         'ын', 'ой'])) {
-            Man += 0.4
-        }
-
-        if (this.Contains(this.Last(3), ['ова', 'ина', 'ева', 'ёва', 'ына',
-                                         'мин'])) {
-            Woman += 0.4
-        }
-
-        if (this.Contains(this.Last(2), ['ая'])) {
-            Woman += 0.4
-        }
-
-        Word.SetGender(Man, Woman)
     }
 
     /**
-     * <i>ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU
-     * ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДСТВЕННОСТИ
-     * НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.</i>
-     * 
      * Определение пола по правилам отчеств.
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол.
      */
     GenderByFatherName(Word) {
-        if Type(Word) != "NCLNameCaseWord"
-            throw TypeError(A_LineFile A_Tab A_ThisFunc A_Tab "Параметром должен был объект типа 'NCLNameCaseWord', но вместо него - " Type(Word))
-        this.SetWorkingWord(Word.GetWord())
 
-        if (this.Last(2) == 'ич') {
-            Word.SetGender(10, 0) ; мужчина
-        }
-        if (this.Last(2) == 'на') {
-            Word.SetGender(0, 12) ; женщина
-        }
     }
 
     /**
-     * <i>ИЗНАЧАЛЬНО МЕТОД БЫЛ ПУСТОЙ ИЗ-ЗА НАСЛЕДОВАНИЯ. В КЛАССЕ NCLNAMECASERU
-     * ОПИСЫВАЛСЯ МЕТОД ПОД РУССКИЕ ИМЕНА, НО В AHK ОБРАТНОЙ НАСЛЕДСТВЕННОСТИ
-     * НЕТ (?) И ПУСТОЙ МЕТОД НЕ РАБОТАЛ.</i>  
-     * 
      * Идентифицирует слово определя имя это, фамилия, или отчество.
      * - <b>N</b> - имя
      * - <b>S</b> - фамилия
@@ -1599,242 +1484,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(NCLNameCaseWord)} Word Объект класса слов, который необходимо идентифицировать.
      */
     DetectNamePart(Word) {
-        Namepart := Word.GetWord()
-        Length := StrLen(Namepart)
-        this.SetWorkingWord(Namepart)
 
-        ; Считаем вероятность
-        First := 0
-        Second := 0
-        Father := 0
-
-        ; если смахивает на отчество
-        if (this.Contains(this.Last(3), ['вна', 'чна', 'вич', 'ьич'])) {
-            Father += 3
-        }
-
-        if (this.Contains(this.Last(2), ['ша'])) {
-            First += 0.5
-        }
-
-        ; 'эль'=Рафаэль, Габриэль
-        if (this.Contains(this.Last(3), ['эль'])) {
-            First += 0.5
-        }
-
-        /**
-         * буквы на которые никогда не заканчиваются имена
-         */
-        if (this.Contains(this.Last(1), 'еёжхцочшщъыэю')) {
-            /**
-             * Просто исключения
-             */
-            if (this.InNames(Namepart, ['Мауриц'])) {
-                First += 10
-            } else {
-                Second += 0.3
-            }
-        }
-
-        /**
-         * Используем массив характерных окончаний
-         */
-        if ((this.SplitSecondExclude.Has(this.Last(2, 1)))) {
-            if (!this.Contains(this.Last(1),
-                               this.SplitSecondExclude[this.Last(2, 1)])) {
-                Second += 0.4
-            }
-        }
-
-        /**
-         * Сокращенные ласкательные имена типя Аня Галя и.т.д.
-         */
-        if this.Last(1) == 'я' and this.Contains(this.Last(3, 1), this.VOWELS) {
-            First += 0.5
-        }
-
-        /**
-         * Не бывает имен с такими предпоследними буквами
-         */
-        if (this.Contains(this.Last(2, 1), 'жчщъэю')) {
-            Second += 0.3
-        }
-
-        /**
-         * Слова на мягкий знак. Существует очень мало имен на мягкий знак. Всё
-         * остальное - фамилии.
-         */
-        if (this.Last(1) == 'ь') {
-            /**
-             * Имена типа нинЕЛь адЕЛь асЕЛь
-             */
-            if (this.Last(3, 2) == 'ел') {
-                First += 0.7
-            }
-            /**
-             * Просто исключения
-             */
-            else if (this.InNames(Namepart, ['Лазарь', 'Игорь', 'Любовь'])) {
-                First += 10
-            }
-            /**
-             * Если не то и не другое, тогда фамилия
-             */
-            else {
-                Second += 0.3
-            }
-        }
-        /**
-         * Если две последних букв согласные то скорее всего это фамилия
-         */
-        else if (this.Contains(this.Last(1), this.CONSONANT . 'ь')
-                 AND
-                 this.Contains(this.Last(2, 1), this.CONSONANT . 'ь')) {
-            /**
-             * Практически все кроме тех которые оканчиваются на следующие буквы
-             */
-            if (!this.Contains(this.Last(2), ['др', 'кт', 'лл', 'пп', 'рд',
-                                              'рк', 'рп', 'рт', 'тр'])) {
-                Second += 0.25
-            }
-        }
-
-        /**
-         * Слова, которые заканчиваются на тин
-         */
-        if (this.Last(3) == 'тин' AND this.Contains(this.Last(4, 1), 'нст')) {
-            First += 0.5
-        }
-
-        ; Исключения
-        ; 'Мариа'=Альфонс Мариа Муха
-        ; 'Эвелин'=женские иностранные
-        Names := [
-            'Лев', 'Яков', 'Вова', 'Маша', 'Ольга', 'Еремей','Исак',
-            'Исаак', 'Ева', 'Ирина', 'Элькин', 'Мерлин', 'Макс', 'Алекс',
-            'Мариа', 'Бриджет', 'Элизабет', 'Маргарет', 'Джанет', 'Жаклин',
-            'Эвелин'
-        ]
-        if (this.InNames(Namepart, Names)
-            OR
-            this.InNames(Namepart, this.Names_man)) {
-            First += 10
-        }
-
-        /**
-         * Фамилии которые заканчиваются на -ли кроме тех что типа натАли и.т.д.
-         */
-        if (this.Last(2) == 'ли' AND this.Last(3, 1) != 'а') {
-            Second += 0.4
-        }
-
-        /**
-         * Фамилии на -як кроме тех что типа Касьян Куприян + Ян и.т.д.
-         */
-        if (this.Last(2) == 'ян' AND Length > 2
-            AND
-            !this.Contains(this.Last(3, 1), 'ьи')) {
-            Second += 0.4
-        }
-
-        /**
-         * Фамилии на -ур, кроме имен Артур Тимур
-         */
-        if (this.Last(2) == 'ур') {
-            if (!this.InNames(Namepart, ['Артур', 'Тимур'])) {
-                Second += 0.4
-            }
-        }
-
-        /**
-         * Разбор ласкательных имен на -ик
-         */
-        if (this.Last(2) == 'ик') {
-            /**
-             * Ласкательные буквы перед ик
-             */
-            if (this.Contains(this.Last(3, 1), 'лшхд')) {
-                First += 0.3
-            } else {
-                Second += 0.4
-            }
-        }
-
-        /**
-         * Разбор имен и фамилий, который заканчиваются на ина
-         */
-        if (this.Last(3) == 'ина') {
-            Names := [
-                'Мальвина', 'Антонина', 'Альбина', 'Агриппина', 'Фаина',
-                'Карина', 'Марина', 'Валентина', 'Калина', 'Аделина', 'Алина',
-                'Ангелина', 'Галина', 'Каролина', 'Павлина', 'Полина', 'Элина',
-                'Мина', 'Нина', 'Дина'
-            ]
-            /**
-             * Все похожие на Катерина и Кристина
-             */
-            if (this.Contains(this.Last(7), ['атерина', 'ристина'])) {
-                First += 10
-            }
-            /**
-             * Исключения
-             */
-            else if (this.InNames(Namepart, Names)) {
-                First += 10
-            }
-            /**
-             * Иначе фамилия
-             */
-            else {
-                Second += 0.4
-            }
-        }
-
-        /**
-         * Имена типа Николай
-         */
-        if (this.Last(4) == 'олай') {
-            First += 0.6
-        }
-
-        /**
-         * Фамильные окончания
-         */
-        FamilySuffixes := [
-            'ов', 'ин', 'ев', 'ёв', 'ый', 'ын', 'ой', 'ук', 'як', 'ца', 'ун',
-            'ок', 'ая', 'ёк', 'ив', 'ус', 'ак', 'яр', 'уз', 'ах', 'ай'
-        ]
-        if (this.Contains(this.Last(2), FamilySuffixes)) {
-            Second += 0.4
-        }
-
-        FamilySuffixes := [
-            'ова', 'ева', 'ёва', 'ына', 'шен', 'мей', 'вка', 'шир', 'бан',
-            'чий', 'кий', 'бей', 'чан', 'ган', 'ким', 'кан', 'мар', 'лис'
-        ]
-        if (this.Contains(this.Last(3), FamilySuffixes)) {
-            Second += 0.4
-        }
-
-        if (this.Contains(this.Last(4), ['шена'])) {
-            Second += 0.4
-        }
-
-        ; исключения и частички
-        if (this.InNames(Namepart, ['да', 'валадон', 'Данбар'])){
-            Second += 10
-        }
-
-
-        Maximum := Max([First, Second, Father]*)
-
-        if (First == Maximum) {
-            Word.SetNamePart('N')
-        } else if (Second == Maximum) {
-            Word.SetNamePart('S')
-        } else {
-            Word.SetNamePart('F')
-        }
     }
 
     /**
@@ -2865,6 +2515,253 @@ class NCLNameCaseRu extends NCLNameCaseCore {
         }
         if (this.Last(2) == 'на') {
             Word.SetGender(0, 12) ; женщина
+        }
+    }
+
+    /**
+     * Идентифицирует слово определя имя это, фамилия, или отчество.
+     * - <b>N</b> - имя
+     * - <b>S</b> - фамилия
+     * - <b>F</b> - отчество
+     * @param {(NCLNameCaseWord)} Word Объект класса слов, который необходимо идентифицировать.
+     */
+    DetectNamePart(Word) {
+    
+        Namepart := Word.GetWord()
+        Length := StrLen(Namepart)
+        this.SetWorkingWord(Namepart)
+
+        ; Считаем вероятность
+        First := 0
+        Second := 0
+        Father := 0
+
+        ; если смахивает на отчество
+        if (this.Contains(this.Last(3), ['вна', 'чна', 'вич', 'ьич'])) {
+            Father += 3
+        }
+
+        if (this.Contains(this.Last(2), ['ша'])) {
+            First += 0.5
+        }
+
+        ; 'эль'=Рафаэль, Габриэль
+        if (this.Contains(this.Last(3), ['эль'])) {
+            First += 0.5
+        }
+
+        /**
+         * буквы на которые никогда не заканчиваются имена
+         */
+        if (this.Contains(this.Last(1), 'еёжхцочшщъыэю')) {
+            /**
+             * Просто исключения
+             */
+            if (this.InNames(Namepart, ['Мауриц'])) {
+                First += 10
+            } else {
+                Second += 0.3
+            }
+        }
+
+        /**
+         * Используем массив характерных окончаний
+         */
+        if ((this.SplitSecondExclude.Has(this.Last(2, 1)))) {
+            if (!this.Contains(this.Last(1),
+                                this.SplitSecondExclude[this.Last(2, 1)])) {
+                Second += 0.4
+            }
+        }
+
+        /**
+         * Сокращенные ласкательные имена типя Аня Галя и.т.д.
+         */
+        if this.Last(1) == 'я' and this.Contains(this.Last(3, 1), this.VOWELS) {
+            First += 0.5
+        }
+
+        /**
+         * Не бывает имен с такими предпоследними буквами
+         */
+        if (this.Contains(this.Last(2, 1), 'жчщъэю')) {
+            Second += 0.3
+        }
+
+        /**
+         * Слова на мягкий знак. Существует очень мало имен на мягкий знак. Всё
+         * остальное - фамилии.
+         */
+        if (this.Last(1) == 'ь') {
+            /**
+             * Имена типа нинЕЛь адЕЛь асЕЛь
+             */
+            if (this.Last(3, 2) == 'ел') {
+                First += 0.7
+            }
+            /**
+             * Просто исключения
+             */
+            else if (this.InNames(Namepart, ['Лазарь', 'Игорь', 'Любовь'])) {
+                First += 10
+            }
+            /**
+             * Если не то и не другое, тогда фамилия
+             */
+            else {
+                Second += 0.3
+            }
+        }
+        /**
+         * Если две последних букв согласные то скорее всего это фамилия
+         */
+        else if (this.Contains(this.Last(1), this.CONSONANT . 'ь')
+                    AND
+                    this.Contains(this.Last(2, 1), this.CONSONANT . 'ь')) {
+            /**
+             * Практически все кроме тех которые оканчиваются на следующие буквы
+             */
+            if (!this.Contains(this.Last(2), ['др', 'кт', 'лл', 'пп', 'рд',
+                                                'рк', 'рп', 'рт', 'тр'])) {
+                Second += 0.25
+            }
+        }
+
+        /**
+         * Слова, которые заканчиваются на тин
+         */
+        if (this.Last(3) == 'тин' AND this.Contains(this.Last(4, 1), 'нст')) {
+            First += 0.5
+        }
+
+        ; Исключения
+        ; 'Мариа'=Альфонс Мариа Муха
+        ; 'Эвелин'=женские иностранные
+        Names := [
+            'Лев', 'Яков', 'Вова', 'Маша', 'Ольга', 'Еремей','Исак',
+            'Исаак', 'Ева', 'Ирина', 'Элькин', 'Мерлин', 'Макс', 'Алекс',
+            'Мариа', 'Бриджет', 'Элизабет', 'Маргарет', 'Джанет', 'Жаклин',
+            'Эвелин'
+        ]
+        if (this.InNames(Namepart, Names)
+            OR
+            this.InNames(Namepart, this.Names_man)) {
+            First += 10
+        }
+
+        /**
+         * Фамилии которые заканчиваются на -ли кроме тех что типа натАли и.т.д.
+         */
+        if (this.Last(2) == 'ли' AND this.Last(3, 1) != 'а') {
+            Second += 0.4
+        }
+
+        /**
+         * Фамилии на -як кроме тех что типа Касьян Куприян + Ян и.т.д.
+         */
+        if (this.Last(2) == 'ян' AND Length > 2
+            AND
+            !this.Contains(this.Last(3, 1), 'ьи')) {
+            Second += 0.4
+        }
+
+        /**
+         * Фамилии на -ур, кроме имен Артур Тимур
+         */
+        if (this.Last(2) == 'ур') {
+            if (!this.InNames(Namepart, ['Артур', 'Тимур'])) {
+                Second += 0.4
+            }
+        }
+
+        /**
+         * Разбор ласкательных имен на -ик
+         */
+        if (this.Last(2) == 'ик') {
+            /**
+             * Ласкательные буквы перед ик
+             */
+            if (this.Contains(this.Last(3, 1), 'лшхд')) {
+                First += 0.3
+            } else {
+                Second += 0.4
+            }
+        }
+
+        /**
+         * Разбор имен и фамилий, который заканчиваются на ина
+         */
+        if (this.Last(3) == 'ина') {
+            Names := [
+                'Мальвина', 'Антонина', 'Альбина', 'Агриппина', 'Фаина',
+                'Карина', 'Марина', 'Валентина', 'Калина', 'Аделина', 'Алина',
+                'Ангелина', 'Галина', 'Каролина', 'Павлина', 'Полина', 'Элина',
+                'Мина', 'Нина', 'Дина'
+            ]
+            /**
+             * Все похожие на Катерина и Кристина
+             */
+            if (this.Contains(this.Last(7), ['атерина', 'ристина'])) {
+                First += 10
+            }
+            /**
+             * Исключения
+             */
+            else if (this.InNames(Namepart, Names)) {
+                First += 10
+            }
+            /**
+             * Иначе фамилия
+             */
+            else {
+                Second += 0.4
+            }
+        }
+
+        /**
+         * Имена типа Николай
+         */
+        if (this.Last(4) == 'олай') {
+            First += 0.6
+        }
+
+        /**
+         * Фамильные окончания
+         */
+        FamilySuffixes := [
+            'ов', 'ин', 'ев', 'ёв', 'ый', 'ын', 'ой', 'ук', 'як', 'ца', 'ун',
+            'ок', 'ая', 'ёк', 'ив', 'ус', 'ак', 'яр', 'уз', 'ах', 'ай'
+        ]
+        if (this.Contains(this.Last(2), FamilySuffixes)) {
+            Second += 0.4
+        }
+
+        FamilySuffixes := [
+            'ова', 'ева', 'ёва', 'ына', 'шен', 'мей', 'вка', 'шир', 'бан',
+            'чий', 'кий', 'бей', 'чан', 'ган', 'ким', 'кан', 'мар', 'лис'
+        ]
+        if (this.Contains(this.Last(3), FamilySuffixes)) {
+            Second += 0.4
+        }
+
+        if (this.Contains(this.Last(4), ['шена'])) {
+            Second += 0.4
+        }
+
+        ; исключения и частички
+        if (this.InNames(Namepart, ['да', 'валадон', 'Данбар'])){
+            Second += 10
+        }
+
+
+        Maximum := Max([First, Second, Father]*)
+
+        if (First == Maximum) {
+            Word.SetNamePart('N')
+        } else if (Second == Maximum) {
+            Word.SetNamePart('S')
+        } else {
+            Word.SetNamePart('F')
         }
     }
 }
