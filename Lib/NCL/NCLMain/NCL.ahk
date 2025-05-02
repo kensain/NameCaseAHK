@@ -202,15 +202,15 @@ class NCLStr {
     }
     
     /**
-     * Превращает строку в массив букв
-     * @param {(String)} phrase строка
-     * @returns {(Array)} массив букв
+     * Превращает строку в массив букв.
+     * @param {(String)} Phrase строка
+     * @returns {(Array.<String>)} Массив букв
      */
-    static splitLetters(phrase) {
-        lettersArr := []
-        loop parse phrase
-            lettersArr.Push(A_LoopField)
-        return lettersArr
+    static SplitLetters(Phrase) {
+        LettersArr := []
+        loop parse Phrase
+            LettersArr.Push(A_LoopField)
+        return LettersArr
     }
     
     /**
@@ -226,25 +226,29 @@ class NCLStr {
         return res
     }
     
-    static implode(separator, lettersArr) {
+    /**
+     * Соединяет буквы друг с другом через разделитель
+     * @param {(String)} Separator Разделитель, например, `"-"`
+     * @param {(Array.<String>)} LettersArr Массив букв, например, `["а", "б"]`
+     * @returns {(String)} Результат объединения - `"а-б"`
+     */
+    static Implode(Separator, LettersArr) {
         res := ""
-        for letter in lettersArr {
+        for letter in LettersArr {
             res .= letter
-            if A_Index < lettersArr.Length
-                res .= separator
+            if A_Index < LettersArr.Length
+                res .= Separator
         }
         return res
     }
 
     /**
-     * Разбивает строку на части использую шаблон
-     * @param {(String)} pattern шаблон разбития
-     * @param {(String)} Str строка, которую нужно разбить
-     * @returns {(Array)} разбитый массив 
+     * Разбивает строку на части, использую шаблон.
+     * @param {(String)} Pattern Шаблон разбития
+     * @param {(String)} Str Строка, которую нужно разбить
+     * @returns {(Array.<String>)} Разбитый массив 
      */
-    static explode(pattern, Str) {
-
-        return RegExSplit(Str, pattern)
+    static Explode(Pattern, Str) {
 
         /**
          * @description {@link https://www.autohotkey.com/boards/viewtopic.php?p=331034#p331034}
@@ -253,17 +257,18 @@ class NCLStr {
          * @param OmitChars 
          * @param MaxParts 
          * @returns {(Array)} 
-         */
-        RegExSplit(String, Delimiter := "", OmitChars := "", MaxParts := -1) {
-            uFFFF := Chr(0xFFFF)
-        
-            ; early exit, split by chars
-            if (Delimiter = "")
-                return StrSplit(String, Delimiter, OmitChars, MaxParts)
-        
-            return StrSplit(RegExReplace(String, Delimiter, uFFFF), uFFFF, OmitChars, MaxParts)
+        */
+       RegExSplit(String, Delimiter := "", OmitChars := "", MaxParts := -1) {
+           uFFFF := Chr(0xFFFF)
+           
+           ; early exit, split by chars
+           if (Delimiter = "")
+            return StrSplit(String, Delimiter, OmitChars, MaxParts)
+           
+           return StrSplit(RegExReplace(String, Delimiter, uFFFF), uFFFF, OmitChars, MaxParts)
         }
 
+        return RegExSplit(Str, Pattern)
     }
 }
 
@@ -300,7 +305,7 @@ class NCLNameCaseCore extends NCL {
        this._LastRule := 0
        this._LastResult := []
        this._Index := Map()
-       this._Gender_koef := 0 
+       this._GenderCoef := 0 
     }
     /**
      * Готовность системы:
@@ -414,14 +419,14 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Вероятность автоопредления пола `[0..10]`. Достаточно точно при `0.1`.
-     * @property {(Float)} Gender_koef
+     * @property {(Float)} GenderCoef
      */
-    Gender_koef {
+    GenderCoef {
         get {
-            return this._Gender_koef
+            return this._GenderCoef
         }
         set {
-            this._Gender_koef := Value
+            this._GenderCoef := Value
         }
     }
 
@@ -459,7 +464,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Устанавливает номер последнего правила.
-     * @param {(Int)} Index номер правила которое нужно установить.
+     * @param {(Int)} Index Номер правила которое нужно установить.
      */
     Rule(Index) {
         this.LastRule := Index
@@ -467,7 +472,7 @@ class NCLNameCaseCore extends NCL {
 
     /**
      * Устанавливает слово текущим для работы системы. Очищает кэш слова.
-     * @param {(String)} Word слово, которое нужно установить
+     * @param {(String)} Word Слово, которое нужно установить
      */
     SetWorkingWord(Word) {
         ; Сбрасываем настройки
@@ -492,9 +497,9 @@ class NCLNameCaseCore extends NCL {
      * Если `StopAfter = 0`, вырезает `Length` последних букв из текущего слов
      * `this.WorkingWord`.  
      * Если нет - вырезает `StopAfter` букв, начиная от `Length` с конца.
-     * @param {(Int)} Length количество букв с конца
-     * @param {(Int)} StopAfter количество вырезанных букв (0 - все)
-     * @returns {(String)} требуемая подстрока
+     * @param {(Int)} Length Количество букв с конца
+     * @param {(Int)} StopAfter Количество вырезанных букв (0 - все)
+     * @returns {(String)} Требуемая подстрока
      */
     Last(Length := 1, StopAfter := 0) {
         ; Сколько букв нужно вырезать все или только часть
@@ -523,9 +528,9 @@ class NCLNameCaseCore extends NCL {
      * Над текущим словом (`this.WorkingWord`) выполняются правила в порядке указаном в `RulesArray`.  
      * `Gender` служит для указания того, какие правила использовать: мужские
      * (`man`) или женские (`woman`).
-     * @param {(String)} Gender префикс мужских/женских правил.
-     * @param {(Array)} RulesArray массив, порядок выполнения правил.
-     * @returns {(Boolean)} если правило было использовано - `true`, если нет -
+     * @param {(String)} Gender Префикс мужских/женских правил.
+     * @param {(Array)} RulesArray Массив, порядок выполнения правил.
+     * @returns {(Boolean)} Если правило было использовано - `true`, если нет -
      * `false`.
      */
     RulesChain(Gender, RulesArray) {
@@ -543,8 +548,8 @@ class NCLNameCaseCore extends NCL {
      * `String`.  
      * Если `String` - массив, проверяется входит ли строка `Letter` в массив
      * `String`.
-     * @param {(String)} Letter буква или строка, которую нужно искать.
-     * @param {(Array|String)} String строка или массив, в котором нужно искать.
+     * @param {(String)} Letter Буква или строка, которую нужно искать.
+     * @param {(Array|String)} String Строка или массив, в котором нужно искать.
      * @returns {(Boolean)} `true`, если искомое значение найдено.
      */
     Contains(Letter, String) {
@@ -722,7 +727,7 @@ class NCLNameCaseCore extends NCL {
      * В массив `this.Words` добавляется новый объект класса `NCLNameCaseWord`
      * со словом `Secondname` и пометкой, что это фамилия.
      * @param {(String)} Secondname Фамилия
-     * @return {(NCLNameCaseCore)}
+     * @returns {(NCLNameCaseCore)}
      */
     SetLastName(Secondname?) => this.SetSecondName(Secondname?)
     
@@ -732,7 +737,7 @@ class NCLNameCaseCore extends NCL {
      * со словом `Secondname` и пометкой, что это фамилия.
      * @deprecated Вроде бы нигде не используется, но пока оставлю тут.
      * @param {(String)} Secondname Фамилия
-     * @return {(NCLNameCaseCore)}
+     * @returns {(NCLNameCaseCore)}
      */
     SetSirName(Secondname?) => this.SetSecondName(Secondname?)
 
@@ -866,7 +871,7 @@ class NCLNameCaseCore extends NCL {
                     Genders := this.Words[n].GetGender()
                     _min := Min(Genders)
                     _max := Max(Genders)
-                    this.Gender_koef := _max-_min
+                    this.GenderCoef := _max-_min
 
                     return this.Words[n].Gender()
                 }
@@ -890,7 +895,7 @@ class NCLNameCaseCore extends NCL {
     SplitFullName(Fullname) {
 
         Fullname := Trim(Fullname)
-        List := NCLStr.explode(" ", Fullname)
+        List := NCLStr.Explode(" ", Fullname)
         
         for word in List {
             this.Words.Push(NCLNameCaseWord(word))
@@ -952,7 +957,7 @@ class NCLNameCaseCore extends NCL {
          * {@link http://new.gramota.ru/spravka/buro/search-answer?s=273912}  
          */
         Temp := Word.GetWordOrig()
-        CurWords := NCLStr.explode('-', Temp)
+        CurWords := NCLStr.Explode('-', Temp)
         OCurWords := []
 
         Result := []
@@ -1046,7 +1051,7 @@ class NCLNameCaseCore extends NCL {
      * Если нет - возвращает массив со всеми падежами текущего слова.
      * @param {(NCLNameCaseWord)} Word Слово, для которого нужно вернуть падеж
      * @param {(Int)} Number Номер падежа, который нужно вернуть
-     * @return {(Array.<String>|String)} Массив|строка с нужным падежом
+     * @returns {(Array.<String>|String)} Массив|строка с нужным падежом
      */
     GetWordCase(Word, Number?) {
         Cases := Word.GetNameCases()
@@ -1090,12 +1095,12 @@ class NCLNameCaseCore extends NCL {
                         Temp.Push(ReadyArr[i][_Case])
                         i++
                     }
-                    ResultArr[_Case] := NCLStr.implode(' ', Temp)
+                    ResultArr[_Case] := NCLStr.Implode(' ', Temp)
                     _Case++
                 }
                 return ResultArr
             } else {
-                return NCLStr.implode(' ', ReadyArr)
+                return NCLStr.Implode(' ', ReadyArr)
             }
         }
         return ""
