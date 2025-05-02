@@ -102,7 +102,7 @@ class NCL {
 }
 
 /**
- * Класс содержит функции для работы со строками, которые используются в NCLNameCaseLib
+ * Класс содержит функции для работы со строками, которые используются в NCLNameCaseLib.
  * 
  * @author Андрей Чайка <bymer3@gmail.com>
  * @version 0.4.1
@@ -273,8 +273,7 @@ class NCLStr {
 }
 
 /**
- * <b>NCL NameCase Core</b>
- *
+ * <b>NCL NameCase Core</b>  
  * Набор основных функций, который позволяют сделать интерфейс склонения
  * русского и украинского языка абсолютно одинаковым. Содержит все функции для
  * внешнего взаимодействия с библиотекой.
@@ -1456,7 +1455,9 @@ class NCLNameCaseCore extends NCL {
      * определить пол.
      */
     GenderByFirstName(Word) {
-
+        /**
+         * Метод-пустышка, реализуется в классах NCLNameCaseRu/NCLNameCaseRu
+         */
     }
 
     /**
@@ -1465,7 +1466,9 @@ class NCLNameCaseCore extends NCL {
      * определить пол.
      */
     GenderBySecondName(Word) {
-
+        /**
+         * Метод-пустышка, реализуется в классах NCLNameCaseRu/NCLNameCaseRu
+         */
     }
 
     /**
@@ -1473,7 +1476,9 @@ class NCLNameCaseCore extends NCL {
      * @param {(NCLNameCaseWord)} Word Объект класса слов, для которого нужно определить пол.
      */
     GenderByFatherName(Word) {
-
+        /**
+         * Метод-пустышка, реализуется в классах NCLNameCaseRu/NCLNameCaseRu
+         */
     }
 
     /**
@@ -1484,7 +1489,9 @@ class NCLNameCaseCore extends NCL {
      * @param {(NCLNameCaseWord)} Word Объект класса слов, который необходимо идентифицировать.
      */
     DetectNamePart(Word) {
-
+        /**
+         * Метод-пустышка, реализуется в классах NCLNameCaseRu/NCLNameCaseRu
+         */
     }
 
     /**
@@ -1503,8 +1510,7 @@ class NCLNameCaseCore extends NCL {
 
 /**
  * NCLNameCaseWord - класс, который служит для хранения всей информации о каждом
- * слове
- *
+ * слове.  
  * @author Андрей Чайка <bymer3@gmail.com>
  * @version 0.4.1
  * @package NameCaseLib
@@ -1863,7 +1869,6 @@ class NCLNameCaseWord {
  * Русские правила склонения ФИО.  
  * Правила определения пола человека по ФИО для русского языка.  
  * Система разделения фамилий имен и отчеств для русского языка.
- * 
  * @author Андрей Чайка <bymer3@gmail.com>
  * @version 0.4.1
  * @package NameCaseLib
@@ -2752,7 +2757,6 @@ class NCLNameCaseRu extends NCLNameCaseCore {
         if (this.InNames(Namepart, ['да', 'валадон', 'Данбар'])){
             Second += 10
         }
-
 
         Maximum := Max([First, Second, Father]*)
 
