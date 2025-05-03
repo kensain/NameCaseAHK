@@ -1,6 +1,6 @@
 # NameCaseAHK
 
-NameCaseAHK — порт PHP билиотеки [https://github.com/seagullua/NameCaseLib](https://github.com/seagullua/NameCaseLib).
+NameCaseAHK — порт PHP библиотеки [https://github.com/seagullua/NameCaseLib](https://github.com/seagullua/NameCaseLib).
 
 Примеры работы представлены в папке Lessons. В папке Tests есть скетчи для прогонки по большому списку мужских и женских имён (в сумме свыше 2000 тысяч ФИО).
 
