@@ -1073,8 +1073,8 @@ class NCLNameCaseCore extends NCL {
      * Эта функция собирает все слова из `IndexArray` в одну строку.
      * @param {(Array)} IndexArray Слова, которые необходимо собрать вместе.
      * @param {(Int)} Number Номер падежа.
-     * @returns {(Array|String)} Массив со всеми падежами, либо строка с одним
-     * падежом.
+     * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
+     * с одним падежом.
      */
     GetCasesConnected(IndexArray, Number?) {
         ReadyArr := []
@@ -1382,7 +1382,7 @@ class NCLNameCaseCore extends NCL {
      * @param {(String)} FullName ФИО.
      * @param {(Int)} CaseNum Номер падежа.
      * @param {(Int)} Gender Пол человека.
-     * @returns {(Array|String)} Массив со всеми падежами, либо строка
+     * @returns {(Array.<String>|String)} Массив со всеми падежами, либо строка
      * с одним падежом.
      */
     q(FullName, CaseNum?, Gender?) {
