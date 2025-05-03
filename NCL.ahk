@@ -487,7 +487,13 @@ class NCLNameCaseCore extends NCL {
      * именительный падеж.
      */
     MakeResultTheSame() {
-        loop this.CaseCount {
+        /**
+         * Выдавало ошибку, что нет такого индекса, поэтому заранее устаналиваю
+         * длину 6
+         */ 
+        if this.LastResult.Length = 0
+            this.LastResult.Length := this.CASECOUNT
+        loop this.CASECOUNT {
             this.LastResult[A_Index] := this.WorkingWord
         }
     }
@@ -1885,38 +1891,38 @@ class NCLNameCaseRu extends NCLNameCaseCore {
      * Количество падежей в языке.
      * @property {(Int)} CASECOUNT
      */
-    CASECOUNT => 6
+    CASECOUNT := 6
 
     /**
      * Список гласных русского языка.
      * @property {(String)} VOWELS
      */
-    VOWELS => "аеёиоуыэюя"
+    VOWELS := "аеёиоуыэюя"
 
     /**
      * Список согласных русского языка.
      * @property {(String)} CONSONANT
      */
-    CONSONANT => "бвгджзйклмнпрстфхцчшщ"
+    CONSONANT := "бвгджзйклмнпрстфхцчшщ"
     
     /**
      * Окончания имен/фамилий, который не склоняются
      * @property {(Array.<String>)} OVO
      */
-    OVO => [ 'ово', 'аго', 'яго', 'ирь']
+    OVO := [ 'ово', 'аго', 'яго', 'ирь']
     
     /**
      * Окончания имен/фамилий, который не склоняются
      * @property {(Array.<String>)} IH
      */
-    IH => ['их', 'ых', 'ко', 'уа'] ; Бенуа, Франсуа
+    IH := ['их', 'ых', 'ко', 'уа'] ; Бенуа, Франсуа
 
     /**
      * Список окончаний, характерных для фамилий.  
      * По шаблону {letter}* где * любой символ кроме тех, что в {exclude}
      * @property {(Map.<String, String>)} SPLITSECONDEXCLUDE
      */
-    SPLITSECONDEXCLUDE => Map(
+    SPLITSECONDEXCLUDE := Map(
         'а', 'взйкмнпрстфя',
         'б', 'а',
         'в', 'аь',
@@ -2572,9 +2578,12 @@ class NCLNameCaseRu extends NCLNameCaseCore {
         /**
          * Используем массив характерных окончаний
          */
-        if ((this.SplitSecondExclude.Has(this.Last(2, 1)))) {
-            if (!this.Contains(this.Last(1),
-                                this.SplitSecondExclude[this.Last(2, 1)])) {
+        var := this.Last(2, 1)
+        var2 := this.Last(1)
+        var3 := this.SplitSecondExclude[var]
+        if ((this.SplitSecondExclude.Has(var))) {
+            if (!this.Contains(var2,
+                               var3)) {
                 Second += 0.4
             }
         }
